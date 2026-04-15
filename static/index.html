@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PENS — Grid OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06020f;--p1:#08041a;--p2:#0a0620;
+  --cyan:#00e5ff;--cyan2:#00b8d4;
+  --mag:#9900cc;--mag2:#7700aa;
+  --teal:#00ffaa;--amber:#ff9500;
+  --rd:#ff2244;--grn:#00ff88;
+  --tx:#b8d8e8;--t2:#4a7080;--t3:#1a3040;
+  --orb:'Orbitron',monospace;
+  --raj:'Rajdhani',sans-serif;
+  --mono:'Share Tech Mono',monospace;
+}
+html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--mono);overflow:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(80,0,130,.18) 0%,transparent 60%)}
+body::after{content:'';position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(0,229,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.022) 1px,transparent 1px),
+    linear-gradient(rgba(0,229,255,.008) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,229,255,.008) 1px,transparent 1px);
+  background-size:60px 60px,60px 60px,15px 15px,15px 15px}
+
+.app{position:relative;z-index:1;display:grid;grid-template-rows:48px 1fr;height:100vh}
+.body{display:grid;grid-template-columns:210px 1fr 270px;overflow:hidden;position:relative}
+
+/* TOP BAR */
+.topbar{background:rgba(6,2,15,.96);border-bottom:1px solid rgba(0,229,255,.12);
+  display:flex;align-items:center;padding:0 18px;gap:12px}
+.logo{font-family:var(--orb);font-size:13px;font-weight:700;color:var(--cyan);
+  letter-spacing:.2em;text-shadow:0 0 20px rgba(0,229,255,.8)}
+.ldot{width:5px;height:5px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 8px var(--teal);animation:lp 2s ease infinite;flex-shrink:0}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.2}}
+.tsep{width:1px;height:18px;background:rgba(0,229,255,.08);flex-shrink:0}
+.tg{display:flex;flex-direction:column;gap:1px}
+.tgl{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em}
+.tgv{font-size:10px;color:var(--tx)}
+.hbar{display:flex;align-items:center;gap:7px}
+.htrack{width:80px;height:2px;background:rgba(0,229,255,.08);border-radius:1px;overflow:hidden}
+.hfill{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));
+  transition:width 1.2s ease;box-shadow:0 0 6px var(--cyan)}
+.conn{font-family:var(--orb);font-size:8px;padding:2px 8px;border-radius:2px;
+  letter-spacing:.1em;border:1px solid;flex-shrink:0}
+.ok{color:var(--teal);border-color:rgba(0,255,170,.3);background:rgba(0,255,170,.06);
+  text-shadow:0 0 8px var(--teal)}
+.err{color:var(--rd);border-color:rgba(255,34,68,.3);background:rgba(255,34,68,.06)}
+.clk{font-family:var(--orb);font-size:10px;color:var(--t2);margin-left:auto;letter-spacing:.05em}
+
+/* LEFT */
+.left{background:rgba(6,2,15,.88);border-right:1px solid rgba(0,229,255,.07);
+  display:flex;flex-direction:column;overflow:hidden}
+.phdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.2em;
+  text-transform:uppercase;padding:10px 12px 7px;
+  border-bottom:1px solid rgba(0,229,255,.05);flex-shrink:0}
+.organs{flex:1;overflow-y:auto;padding:5px}
+.organ{border:1px solid rgba(0,229,255,.07);border-radius:3px;margin-bottom:4px;
+  overflow:hidden;transition:all .25s;background:rgba(8,4,26,.5);
+  cursor:pointer;position:relative}
+.organ:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04);
+  transform:translateX(2px)}
+.organ.active{border-color:var(--cyan);background:rgba(0,229,255,.06);
+  box-shadow:0 0 12px rgba(0,229,255,.1)}
+.organ.warn{border-color:rgba(255,149,0,.3)}
+.organ.crit{border-color:rgba(255,34,68,.4);animation:ca 1.5s ease infinite}
+@keyframes ca{50%{box-shadow:0 0 12px rgba(255,34,68,.15)}}
+.ohdr{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:7px;padding:7px 9px}
+.oicon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;
+  justify-content:center;font-size:11px;flex-shrink:0}
+.oname{font-family:var(--orb);font-size:7px;color:var(--t2);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:1px}
+.oval{font-size:10px;color:var(--tx)}
+.oscore{font-family:var(--orb);font-size:11px;font-weight:600}
+.otrack{height:1px;background:rgba(0,229,255,.05);margin:0 9px 7px}
+.ofill{height:100%;transition:width 1s ease}
+.gas-section{border-top:1px solid rgba(0,229,255,.05);padding:5px;flex-shrink:0}
+.grow{display:flex;align-items:center;justify-content:space-between;padding:4px 7px;
+  border-radius:3px;margin-bottom:3px;background:rgba(8,4,26,.4);
+  border:1px solid rgba(0,229,255,.04)}
+.gname{font-size:7px;color:var(--t2)}
+.gval{font-family:var(--orb);font-size:9px}
+.gbt{height:1px;background:rgba(0,229,255,.04);margin-top:2px;overflow:hidden;border-radius:1px}
+.gbf{height:100%;transition:width .8s ease}
+
+/* CENTER */
+.center{display:flex;flex-direction:column;overflow:hidden;position:relative}
+.hero{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:10px 16px 0}
+.grid-health-title{font-family:var(--orb);font-size:11px;font-weight:700;color:var(--cyan);
+  letter-spacing:.4em;text-transform:uppercase;
+  text-shadow:0 0 20px rgba(0,229,255,.9),0 0 40px rgba(0,229,255,.4);margin-bottom:6px}
+.hero-desc{font-size:9px;color:var(--t2);text-align:center;line-height:1.7;
+  max-width:380px;margin-bottom:5px}
+.hero-tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.htag{font-family:var(--orb);font-size:7px;padding:2px 7px;border-radius:2px;
+  border:1px solid;letter-spacing:.06em}
+.ring-area{position:relative;width:200px;height:200px;flex-shrink:0}
+#rcanvas{position:absolute;inset:0;width:200px;height:200px}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.rscore{font-family:var(--orb);font-size:44px;font-weight:900;color:var(--cyan);
+  line-height:1;text-shadow:0 0 30px rgba(0,229,255,.8);transition:all .5s}
+.runit{font-family:var(--orb);font-size:10px;color:var(--t2);letter-spacing:.1em}
+.rstatus{font-family:var(--orb);font-size:9px;font-weight:600;
+  letter-spacing:.3em;text-transform:uppercase;margin-top:3px;transition:color .5s}
+.mcards{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;
+  padding:6px 14px;flex-shrink:0}
+.mcard{background:rgba(8,4,26,.8);border:1px solid rgba(0,229,255,.08);
+  border-radius:4px;padding:9px 11px;position:relative;overflow:hidden;
+  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
+.mlbl{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
+  text-transform:uppercase;margin-bottom:3px}
+.mval{font-family:var(--orb);font-size:18px;font-weight:700;line-height:1;margin-bottom:1px}
+.msub{font-size:7px;color:var(--t3)}
+.bottom{flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;
+  gap:5px;padding:0 14px 10px}
+.feed-panel{background:rgba(8,4,26,.6);border:1px solid rgba(0,229,255,.06);
+  border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+.fpanel-hdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
+  text-transform:uppercase;padding:7px 10px;
+  border-bottom:1px solid rgba(0,229,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.feed{flex:1;overflow-y:auto;padding:4px;display:flex;flex-direction:column;gap:2px}
+.fitem{display:grid;grid-template-columns:5px 46px 1fr auto;align-items:start;
+  gap:6px;padding:5px 7px;background:rgba(6,2,15,.6);
+  border:1px solid rgba(0,229,255,.04);border-radius:3px;animation:fi .2s ease}
+@keyframes fi{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
+.fdot{width:4px;height:4px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.ftime{font-size:8px;color:var(--t3);margin-top:1px}
+.ftxt{font-size:8px;color:var(--tx);line-height:1.5}
+.fsub{font-size:7px;color:var(--t2);margin-top:1px}
+.fbadge{font-family:var(--orb);font-size:6px;padding:1px 5px;border-radius:2px;
+  border:1px solid;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.wave-panel{background:rgba(8,4,26,.7);border:1px solid rgba(0,229,255,.08);
+  border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+.wpanel-hdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
+  text-transform:uppercase;padding:7px 10px;
+  border-bottom:1px solid rgba(0,229,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.wcanvas-wrap{flex:1;position:relative;padding:6px}
+#wcanvas{width:100%;height:100%;display:block}
+
+/* RIGHT */
+.right{background:rgba(6,2,15,.9);border-left:1px solid rgba(0,229,255,.07);
+  display:flex;flex-direction:column;overflow:hidden}
+.ascroll{flex:1;overflow-y:auto;padding:5px}
+.nscroll{overflow-y:auto;padding:5px;max-height:170px;
+  border-top:1px solid rgba(0,229,255,.05)}
+.aitem{border:1px solid rgba(0,229,255,.05);border-radius:3px;padding:7px 9px;
+  margin-bottom:4px;background:rgba(8,4,26,.5);transition:border-color .2s}
+.aitem:hover{border-color:rgba(0,229,255,.15)}
+.aitem.crit{border-color:rgba(255,34,68,.3);background:rgba(255,34,68,.03)}
+.aitem.warn{border-color:rgba(255,149,0,.2);background:rgba(255,149,0,.02)}
+.aitem.info{border-color:rgba(0,229,255,.12);background:rgba(0,229,255,.015)}
+.atype{font-family:var(--orb);font-size:8px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:3px}
+.adesc{font-size:8px;color:var(--t2);line-height:1.5;margin-bottom:2px}
+.atime{font-size:7px;color:var(--t3)}
+.asev{font-family:var(--orb);font-size:7px;padding:1px 5px;border-radius:2px;
+  border:1px solid;float:right;margin-top:-14px}
+
+/* DETAIL PANEL */
+.detail{
+  position:fixed;top:48px;right:0;bottom:0;
+  width:480px;
+  z-index:200;
+  background:rgba(6,2,15,.98);
+  border-left:1px solid rgba(0,229,255,.15);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);
+  transition:transform .3s ease;
+  box-shadow:-10px 0 40px rgba(0,0,0,.5);
+}
+.detail.open{transform:translateX(0)}
+.detail-hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 14px;
+  border-bottom:1px solid rgba(0,229,255,.1);
+  flex-shrink:0;
+}
+.detail-title{font-family:var(--orb);font-size:11px;color:var(--cyan);
+  letter-spacing:.15em;text-transform:uppercase;
+  text-shadow:0 0 10px rgba(0,229,255,.5)}
+.detail-close{
+  font-family:var(--orb);font-size:16px;color:var(--t2);
+  cursor:pointer;padding:2px 8px;border:1px solid rgba(0,229,255,.1);
+  border-radius:3px;transition:all .2s;background:transparent;
+}
+.detail-close:hover{color:var(--cyan);border-color:var(--cyan)}
+.detail-stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  padding:12px 14px;flex-shrink:0;
+  border-bottom:1px solid rgba(0,229,255,.06);
+}
+.dstat{background:rgba(8,4,26,.8);border:1px solid rgba(0,229,255,.08);
+  border-radius:4px;padding:8px 10px}
+.dstat-l{font-family:var(--orb);font-size:7px;color:var(--t3);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.dstat-v{font-family:var(--orb);font-size:16px;font-weight:700}
+.detail-chart-wrap{padding:10px 14px;flex-shrink:0;
+  border-bottom:1px solid rgba(0,229,255,.06)}
+.detail-chart-lbl{font-family:var(--orb);font-size:7px;color:var(--t3);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
+#detail-canvas{width:100%;height:80px;display:block}
+.detail-table-wrap{flex:1;overflow-y:auto;padding:10px 14px}
+.detail-table-lbl{font-family:var(--orb);font-size:7px;color:var(--t3);
+  letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
+.dtable{width:100%;border-collapse:collapse;font-size:8px}
+.dtable th{font-family:var(--orb);font-size:7px;color:var(--t3);
+  letter-spacing:.1em;text-transform:uppercase;padding:4px 6px;
+  border-bottom:1px solid rgba(0,229,255,.06);text-align:left;
+  position:sticky;top:0;background:rgba(6,2,15,.98)}
+.dtable td{padding:5px 6px;border-bottom:1px solid rgba(0,229,255,.03);
+  color:var(--t2);vertical-align:top}
+.dtable td:nth-child(3){color:var(--tx);font-weight:500}
+.dtable tr:hover td{background:rgba(0,229,255,.02)}
+.loading{padding:20px;text-align:center;color:var(--t3);font-size:9px;
+  font-family:var(--orb);letter-spacing:.1em}
+
+::-webkit-scrollbar{width:2px}
+::-webkit-scrollbar-thumb{background:rgba(0,229,255,.08)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="logo">PENS GRID OS</div>
+  <div class="ldot"></div>
+  <div class="tsep"></div>
+  <div class="tg">
+    <div class="tgl">Grid health</div>
+    <div class="hbar">
+      <div class="htrack"><div class="hfill" id="top-bar" style="width:0%"></div></div>
+      <div class="tgv" id="top-val" style="color:var(--cyan)">--</div>
+    </div>
+  </div>
+  <div class="tsep"></div>
+  <div class="tg"><div class="tgl">Region</div><div class="tgv">California ISO · CAISO</div></div>
+  <div class="tsep"></div>
+  <div class="tg"><div class="tgl">Data sources</div><div class="tgv">EIA · Open-Meteo · USGS · NOAA</div></div>
+  <div class="conn ok" id="conn">LIVE</div>
+  <div class="clk" id="clk">--:--:-- UTC</div>
+</div>
+
+<div class="body">
+
+<!-- LEFT -->
+<div class="left">
+  <div class="phdr">ICU — 6 organs · click to inspect</div>
+  <div class="organs">
+    <div class="organ" id="org-electricity" onclick="openDetail('electricity','Electricity Demand','var(--amber)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(255,149,0,.1)">⚡</div>
+        <div><div class="oname">Electricity</div><div class="oval" id="ov-elec">-- MWh</div></div>
+        <div class="oscore" id="os-elec">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-elec" style="width:0%;background:var(--amber)"></div></div>
+    </div>
+    <div class="organ" id="org-solar" onclick="openDetail('solar','Solar Irradiance','var(--amber)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(255,149,0,.08)">☀</div>
+        <div><div class="oname">Solar</div><div class="oval" id="ov-solar">-- W/m²</div></div>
+        <div class="oscore" id="os-solar">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-solar" style="width:0%;background:var(--amber)"></div></div>
+    </div>
+    <div class="organ" id="org-wind" onclick="openDetail('wind','Wind Speed','var(--cyan)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(0,229,255,.08)">💨</div>
+        <div><div class="oname">Wind</div><div class="oval" id="ov-wind">-- m/s</div></div>
+        <div class="oscore" id="os-wind">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-wind" style="width:0%;background:var(--cyan)"></div></div>
+    </div>
+    <div class="organ" id="org-weather" onclick="openDetail('weather','Temperature','var(--teal)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(0,255,170,.08)">🌡</div>
+        <div><div class="oname">Temperature</div><div class="oval" id="ov-temp">-- °C</div></div>
+        <div class="oscore" id="os-temp">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-temp" style="width:0%;background:var(--teal)"></div></div>
+    </div>
+    <div class="organ" id="org-gas" onclick="openDetail('gas','Gas Storage','var(--mag)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(153,0,204,.12)">🔥</div>
+        <div><div class="oname">Gas storage</div><div class="oval" id="ov-gas">-- Bcf</div></div>
+        <div class="oscore" id="os-gas">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-gas" style="width:0%;background:var(--mag)"></div></div>
+    </div>
+    <div class="organ" id="org-water" onclick="openDetail('water','River Water','var(--cyan)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(0,229,255,.08)">💧</div>
+        <div><div class="oname">Water</div><div class="oval" id="ov-water">Sacramento River</div></div>
+        <div class="oscore" id="os-water">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-water" style="width:0%;background:var(--cyan)"></div></div>
+    </div>
+    <div class="organ" id="org-forecast" onclick="openDetail('forecast','7-Day Forecast Risk','var(--mag)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(153,0,204,.1)">📡</div>
+        <div><div class="oname">Forecast</div><div class="oval" id="ov-forecast">-- risk score</div></div>
+        <div class="oscore" id="os-forecast">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-forecast" style="width:0%;background:var(--mag)"></div></div>
+    </div>
+    <div class="organ" id="org-health" onclick="openDetail('health','Grid Health Score','var(--grn)')">
+      <div class="ohdr">
+        <div class="oicon" style="background:rgba(0,255,136,.08)">🏥</div>
+        <div><div class="oname">Health score</div><div class="oval" id="ov-health">-- /100</div></div>
+        <div class="oscore" id="os-health">--</div>
+      </div>
+      <div class="otrack"><div class="ofill" id="ob-health" style="width:0%;background:var(--grn)"></div></div>
+    </div>
+  </div>
+  <div class="phdr">Gas regions — US weekly</div>
+  <div class="gas-section" id="gas-regions"></div>
+</div>
+
+<!-- CENTER -->
+<div class="center">
+  <div class="hero">
+    <div class="grid-health-title">Grid Health</div>
+    <div class="hero-desc" id="hero-desc">All six grid organs within normal parameters. California ISO operating nominally.</div>
+    <div class="hero-tags" id="hero-tags"></div>
+    <div class="ring-area">
+      <canvas id="rcanvas" width="200" height="200"></canvas>
+      <div class="ring-center">
+        <div class="rscore" id="rscore">89.5</div>
+        <div class="runit">/100</div>
+        <div class="rstatus" id="rstatus" style="color:var(--teal)">HEALTHY</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mcards">
+    <div class="mcard">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--amber);opacity:.6"></div>
+      <div class="mlbl">Solar irradiance</div>
+      <div class="mval" id="m-solar" style="color:var(--amber);text-shadow:0 0 20px rgba(255,149,0,.4)">--</div>
+      <div class="msub">W/m² live</div>
+    </div>
+    <div class="mcard">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--cyan);opacity:.6"></div>
+      <div class="mlbl">Wind speed</div>
+      <div class="mval" id="m-wind" style="color:var(--cyan);text-shadow:0 0 20px rgba(0,229,255,.4)">--</div>
+      <div class="msub">m/s live</div>
+    </div>
+    <div class="mcard">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--teal);opacity:.6"></div>
+      <div class="mlbl">Temperature</div>
+      <div class="mval" id="m-temp" style="color:var(--teal);text-shadow:0 0 20px rgba(0,255,170,.4)">--</div>
+      <div class="msub">°C California</div>
+    </div>
+    <div class="mcard">
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--mag);opacity:.6"></div>
+      <div class="mlbl">7-day risk</div>
+      <div class="mval" id="m-risk" style="color:var(--mag);text-shadow:0 0 20px rgba(153,0,204,.4)">--</div>
+      <div class="msub">forecast index</div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="feed-panel">
+      <div class="fpanel-hdr">
+        <span>Live event stream</span>
+        <span id="feed-cnt" style="color:var(--t2)">0 events</span>
+      </div>
+      <div class="feed" id="feed"></div>
+    </div>
+    <div class="wave-panel">
+      <div class="wpanel-hdr">
+        <span>7-day forecast breakdown</span>
+        <span style="color:var(--t2);font-size:9px">Solar · Wind · Temp · Risk</span>
+      </div>
+      <div class="wcanvas-wrap">
+        <canvas id="wcanvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL (slides in from right) -->
+  <div class="detail" id="detail-panel">
+    <div class="detail-hdr">
+      <div class="detail-title" id="detail-title">--</div>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="detail-stats" id="detail-stats"></div>
+    <div class="detail-chart-wrap">
+      <div class="detail-chart-lbl">Last 24 hours</div>
+      <canvas id="detail-canvas"></canvas>
+    </div>
+    <div class="detail-table-wrap">
+      <div class="detail-table-lbl">Database records</div>
+      <table class="dtable">
+        <thead><tr>
+          <th>Time</th><th>Metric</th><th>Value</th><th>Unit</th>
+        </tr></thead>
+        <tbody id="detail-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="right">
+  <div class="phdr">Grid alerts <span id="acnt" style="color:var(--rd);margin-left:6px"></span></div>
+  <div class="ascroll" id="alerts-wrap"></div>
+  <div class="phdr" style="border-top:1px solid rgba(0,229,255,.05)">NOAA weather alerts</div>
+  <div class="nscroll" id="noaa-wrap"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+let feedCount=0, ws=null, cycle=0;
+const S={
+  health:89.5,solar:830,wind:2.73,
+  temp:18.3,demand:24582,risk:2.2,
+  gasTotal:1911,alerts:10,
+};
+const W_LEN=120;
+const wdata={
+  solar:Array.from({length:W_LEN},(_,i)=>0.3+Math.sin(i*.08)*.25),
+  wind: Array.from({length:W_LEN},(_,i)=>0.4+Math.sin(i*.06+1)*.2),
+  temp: Array.from({length:W_LEN},(_,i)=>0.5+Math.sin(i*.05+2)*.15),
+  risk: Array.from({length:W_LEN},(_,i)=>0.1+Math.sin(i*.1+3)*.08),
+};
+
+function ts(){return new Date().toTimeString().slice(0,8)}
+function sc(s){return s>=80?'var(--teal)':s>=60?'var(--amber)':'var(--rd)'}
+
+// ── RING ──
+function drawRing(score){
+  const cv=document.getElementById('rcanvas');
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height,cx=W/2,cy=H/2,R=88;
+  ctx.clearRect(0,0,W,H);
+
+  // Outer glow
+  for(let i=3;i>=1;i--){
+    ctx.beginPath();ctx.arc(cx,cy,R+i*4,0,Math.PI*2);
+    ctx.strokeStyle=`rgba(0,229,255,${0.012*i})`;ctx.lineWidth=8;ctx.stroke();
+  }
+  // Magenta inner
+  ctx.beginPath();ctx.arc(cx,cy,R-10,0,Math.PI*2);
+  ctx.strokeStyle='rgba(153,0,204,.07)';ctx.lineWidth=14;ctx.stroke();
+  // Track
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.strokeStyle='rgba(0,229,255,.06)';ctx.lineWidth=3;ctx.stroke();
+  // Ticks
+  for(let i=0;i<72;i++){
+    const a=(i/72)*Math.PI*2-Math.PI/2;
+    const len=i%6===0?7:3,op=i%6===0?.2:.07;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(a)*(R+5),cy+Math.sin(a)*(R+5));
+    ctx.lineTo(cx+Math.cos(a)*(R+5+len),cy+Math.sin(a)*(R+5+len));
+    ctx.strokeStyle=`rgba(0,229,255,${op})`;ctx.lineWidth=i%6===0?1:.5;ctx.stroke();
+  }
+  // Gradient arc
+  const g=ctx.createLinearGradient(cx-R,cy-R,cx+R,cy+R);
+  g.addColorStop(0,'rgba(0,229,255,.9)');
+  g.addColorStop(.5,'rgba(153,0,204,.8)');
+  g.addColorStop(1,'rgba(0,229,255,.9)');
+  // Glow
+  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
+  ctx.strokeStyle='rgba(0,229,255,.12)';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
+  // Main
+  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
+  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke();
+  // Inner mag
+  ctx.beginPath();ctx.arc(cx,cy,R-10,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
+  ctx.strokeStyle='rgba(153,0,204,.25)';ctx.lineWidth=2;ctx.lineCap='round';ctx.stroke();
+  // Center glow
+  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55);
+  cg.addColorStop(0,'rgba(0,229,255,.04)');cg.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(cx,cy,55,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+  // Corner dots
+  [0,90,180,270].forEach(deg=>{
+    const a=deg*Math.PI/180;
+    ctx.beginPath();ctx.arc(cx+Math.cos(a)*(R+16),cy+Math.sin(a)*(R+16),2,0,Math.PI*2);
+    ctx.fillStyle='rgba(0,229,255,.35)';ctx.fill();
+  });
+}
+
+// ── WAVE ──
+function drawWave(){
+  const cv=document.getElementById('wcanvas');
+  const wrap=cv.parentElement;
+  cv.width=wrap.offsetWidth||300;cv.height=wrap.offsetHeight||100;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<=4;i++){
+    ctx.beginPath();ctx.moveTo(0,(i/4)*H);ctx.lineTo(W,(i/4)*H);
+    ctx.strokeStyle='rgba(0,229,255,.04)';ctx.lineWidth=.5;ctx.stroke();
+  }
+  [
+    {d:wdata.solar,c:'rgba(255,149,0,.85)',glow:'rgba(255,149,0,.07)',lw:1.8},
+    {d:wdata.wind, c:'rgba(0,229,255,.75)',glow:'rgba(0,229,255,.05)',lw:1.6},
+    {d:wdata.temp, c:'rgba(0,255,170,.65)',glow:'rgba(0,255,170,.04)',lw:1.4},
+    {d:wdata.risk, c:'rgba(153,0,204,.65)', glow:'rgba(153,0,204,.04)',lw:1.2},
+  ].forEach(w=>{
+    ctx.beginPath();ctx.moveTo(0,H);
+    w.d.forEach((v,i)=>ctx.lineTo((i/(w.d.length-1))*W,H-(v*(H-10))-5));
+    ctx.lineTo(W,H);ctx.closePath();ctx.fillStyle=w.glow;ctx.fill();
+    ctx.beginPath();
+    w.d.forEach((v,i)=>{
+      const x=(i/(w.d.length-1))*W,y=H-(v*(H-10))-5;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.strokeStyle=w.c;ctx.lineWidth=w.lw;ctx.stroke();
+  });
+}
+
+// ── DETAIL PANEL ──
+let currentOrgan=null;
+
+async function openDetail(organ, title, color){
+  // Mark active organ
+  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
+  document.getElementById('org-'+organ)?.classList.add('active');
+
+  currentOrgan=organ;
+  document.getElementById('detail-title').textContent=title;
+  document.getElementById('detail-title').style.color=color;
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('detail-tbody').innerHTML=
+    '<tr><td colspan="4" class="loading">Loading from database...</td></tr>';
+  document.getElementById('detail-stats').innerHTML='';
+
+  try{
+    const res=await fetch(`/api/history/${organ}`);
+    const json=await res.json();
+    const data=json.data||[];
+
+    if(data.length===0){
+      document.getElementById('detail-tbody').innerHTML=
+        '<tr><td colspan="4" class="loading">No data in last 24 hours</td></tr>';
+      return;
+    }
+
+    // Stats
+    const vals=data.map(r=>r.value).filter(v=>v>0);
+    const latest=vals[0]||0;
+    const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+    const max=vals.length?Math.max(...vals):0;
+    const min=vals.length?Math.min(...vals):0;
+    const unit=data[0]?.unit||'';
+
+    document.getElementById('detail-stats').innerHTML=`
+      <div class="dstat">
+        <div class="dstat-l">Latest</div>
+        <div class="dstat-v" style="color:${color}">${latest.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
+      </div>
+      <div class="dstat">
+        <div class="dstat-l">Average 24h</div>
+        <div class="dstat-v" style="color:var(--tx)">${avg.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
+      </div>
+      <div class="dstat">
+        <div class="dstat-l">Maximum</div>
+        <div class="dstat-v" style="color:var(--amber)">${max.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
+      </div>
+      <div class="dstat">
+        <div class="dstat-l">Minimum</div>
+        <div class="dstat-v" style="color:var(--cyan)">${min.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
+      </div>`;
+
+    // Mini chart
+    drawDetailChart(data.slice().reverse(), color);
+
+    // Table
+    const tbody=document.getElementById('detail-tbody');
+    tbody.innerHTML='';
+    data.slice(0,100).forEach(r=>{
+      const t=new Date(r.timestamp);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${t.toTimeString().slice(0,8)}</td>
+        <td>${r.metric}</td>
+        <td>${r.value.toFixed(2)}</td>
+        <td>${r.unit}</td>`;
+      tbody.appendChild(tr);
+    });
+
+    addFeed(`Inspecting ${title}`,`${data.length} records loaded from TimescaleDB`,color,'INSPECT');
+
+  }catch(e){
+    document.getElementById('detail-tbody').innerHTML=
+      '<tr><td colspan="4" class="loading">Error loading data</td></tr>';
+    addFeed('Detail load failed',e.message,'var(--rd)','ERROR');
+  }
+}
+
+function drawDetailChart(data, color){
+  const cv=document.getElementById('detail-canvas');
+  cv.width=cv.parentElement.offsetWidth||280;
+  cv.height=80;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  if(!data.length)return;
+  const vals=data.map(r=>r.value);
+  const mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
+  // Grid
+  for(let i=0;i<=3;i++){
+    ctx.beginPath();ctx.moveTo(0,(i/3)*H);ctx.lineTo(W,(i/3)*H);
+    ctx.strokeStyle='rgba(0,229,255,.04)';ctx.lineWidth=.5;ctx.stroke();
+  }
+  // Fill
+  const col=color.replace('var(--','').replace(')','');
+  const colors={cyan:'rgba(0,229,255,.06)',teal:'rgba(0,255,170,.05)',
+    amber:'rgba(255,149,0,.06)',mag:'rgba(153,0,204,.06)',grn:'rgba(0,255,136,.05)',
+    rd:'rgba(255,34,68,.06)'};
+  ctx.beginPath();ctx.moveTo(0,H);
+  vals.forEach((v,i)=>{
+    ctx.lineTo((i/(vals.length-1))*W, H-((v-mn)/rng)*(H-8)-4);
+  });
+  ctx.lineTo(W,H);ctx.closePath();
+  ctx.fillStyle=colors[col]||'rgba(0,229,255,.05)';ctx.fill();
+  // Line
+  ctx.beginPath();
+  vals.forEach((v,i)=>{
+    const x=(i/(vals.length-1))*W, y=H-((v-mn)/rng)*(H-8)-4;
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
+  // Labels
+  ctx.font='7px Orbitron,monospace';ctx.fillStyle='rgba(74,112,128,.7)';
+  ctx.fillText(mx.toFixed(1),2,10);
+  ctx.fillText(mn.toFixed(1),2,H-3);
+}
+
+function closeDetail(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
+  currentOrgan=null;
+}
+
+// ── RENDER ──
+function render(){
+  const s=S.health,col=sc(s);
+  document.getElementById('top-bar').style.width=s+'%';
+  document.getElementById('top-val').textContent=s.toFixed(1)+'/100';
+  document.getElementById('top-val').style.color=col;
+  drawRing(s);
+  document.getElementById('rscore').textContent=s.toFixed(1);
+  document.getElementById('rscore').style.color=col;
+  document.getElementById('rscore').style.textShadow=`0 0 30px ${col}`;
+  const st=s>=80?'HEALTHY':s>=60?'MODERATE':s>=40?'WARNING':'CRITICAL';
+  document.getElementById('rstatus').textContent=st;
+  document.getElementById('rstatus').style.color=col;
+  const descs={
+    HEALTHY:'All six grid organs within normal parameters. California ISO operating nominally.',
+    MODERATE:'Minor deviations detected. Grid Twin monitoring. HQCOE on standby.',
+    WARNING:'Multiple organs showing stress. HQCOE computing response.',
+    CRITICAL:'Critical conditions. HQCOE response active. Human approval required.'
+  };
+  document.getElementById('hero-desc').textContent=descs[st];
+
+  // Tags
+  const tg=document.getElementById('hero-tags');tg.innerHTML='';
+  [
+    ['EIA LIVE','var(--teal)','rgba(0,255,170,.12)'],
+    ['OPEN-METEO','var(--cyan)','rgba(0,229,255,.1)'],
+    ['USGS','var(--amber)','rgba(255,149,0,.1)'],
+    ['NOAA','var(--mag)','rgba(153,0,204,.12)'],
+    [S.alerts+' ALERTS',S.alerts>0?'var(--rd)':'var(--teal)',
+      S.alerts>0?'rgba(255,34,68,.12)':'rgba(0,255,170,.1)'],
+  ].forEach(([l,c,bg])=>{
+    const el=document.createElement('div');el.className='htag';
+    el.style.cssText=`color:${c};border-color:${c};background:${bg}`;
+    el.textContent=l;tg.appendChild(el);
+  });
+
+  document.getElementById('m-solar').textContent=S.solar.toFixed(0)+' W/m²';
+  document.getElementById('m-wind').textContent=S.wind.toFixed(2)+' m/s';
+  document.getElementById('m-temp').textContent=S.temp.toFixed(1)+'°C';
+  document.getElementById('m-risk').textContent=S.risk.toFixed(1)+'/100';
+
+  setOrg('elec', S.demand.toFixed(0)+' MWh',100,'var(--amber)');
+  setOrg('solar',S.solar.toFixed(0)+' W/m²',Math.min(S.solar/10,100),'var(--amber)');
+  setOrg('wind', S.wind.toFixed(2)+' m/s',100,'var(--cyan)');
+  setOrg('temp', S.temp.toFixed(1)+'°C',100,'var(--teal)');
+  setOrg('gas',  S.gasTotal.toLocaleString()+' Bcf',
+    Math.min((S.gasTotal/2500)*100,100),'var(--mag)');
+  setOrg('water','Sacramento River',100,'var(--cyan)');
+  setOrg('forecast',S.risk.toFixed(1)+' risk',
+    Math.max(0,100-S.risk*10),'var(--mag)');
+  setOrg('health',S.health.toFixed(1)+'/100',S.health,'var(--grn)');
+
+  renderGas();renderAlerts();
+}
+
+function setOrg(id,val,pct,col){
+  const ov=document.getElementById('ov-'+id);
+  const os=document.getElementById('os-'+id);
+  const ob=document.getElementById('ob-'+id);
+  if(ov)ov.textContent=val;
+  if(os){
+    const c=sc(pct);
+    os.textContent=pct.toFixed(0)+'/100';os.style.color=c;
+    os.style.textShadow=`0 0 8px ${c}`;
+  }
+  if(ob){ob.style.width=pct+'%';ob.style.background=col;
+    ob.style.boxShadow=`0 0 5px ${col}`;}
+  const el=document.getElementById('org-'+id);
+  if(el)el.className='organ'+(el.classList.contains('active')?' active':'')+
+    (pct<60?' warn':pct<40?' crit':'');
+}
+
+function renderGas(){
+  const regions=[
+    {n:'US Lower 48',v:S.gasTotal,mx:2500},
+    {n:'Midwest',v:581,mx:1000},{n:'Mountain',v:358,mx:500},
+    {n:'Pacific',v:277,mx:500},{n:'S.C. Nonsalt',v:261,mx:400},
+    {n:'S.C. Salt',v:208,mx:300},
+  ];
+  const wrap=document.getElementById('gas-regions');wrap.innerHTML='';
+  regions.forEach(r=>{
+    const p=Math.min((r.v/r.mx)*100,100);
+    const c=p>60?'var(--teal)':p>40?'var(--amber)':'var(--rd)';
+    const el=document.createElement('div');el.className='grow';
+    el.innerHTML=`
+      <div style="flex:1;min-width:0">
+        <div class="gname">${r.n}</div>
+        <div class="gbt"><div class="gbf" style="width:${p}%;background:${c};box-shadow:0 0 4px ${c}"></div></div>
+      </div>
+      <div class="gval" style="color:${c};margin-left:6px;text-shadow:0 0 6px ${c}">${r.v}</div>`;
+    wrap.appendChild(el);
+  });
+}
+
+function renderAlerts(){
+  const wrap=document.getElementById('alerts-wrap');
+  document.getElementById('acnt').textContent=S.alerts>0?S.alerts+' open':'';
+  wrap.innerHTML='';
+  [
+    {type:'FREEZE WATCH',    desc:'Through April 17. Cold-weather grid protocol on standby.',sev:'Severe',cls:'crit',col:'var(--rd)'},
+    {type:'WIND ADVISORY',   desc:'Active across California and Nevada border regions.',sev:'Moderate',cls:'warn',col:'var(--amber)'},
+    {type:'SOLAR DROP RISK', desc:'Cloud cover reducing irradiance. Monitor solar output.',sev:'Minor',cls:'info',col:'var(--cyan)'},
+  ].forEach(a=>{
+    const el=document.createElement('div');el.className='aitem '+a.cls;
+    el.innerHTML=`
+      <div class="atype" style="color:${a.col};text-shadow:0 0 8px ${a.col}">${a.type}</div>
+      <div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div>
+      <div class="adesc">${a.desc}</div>
+      <div class="atime">${ts()} UTC · OPEN</div>`;
+    wrap.appendChild(el);
+  });
+  const noaa=document.getElementById('noaa-wrap');noaa.innerHTML='';
+  [
+    {type:'Freeze Watch',sev:'Severe',desc:'Until April 17 08:00 PDT. NWS Reno NV.',col:'var(--rd)'},
+    {type:'Wind Advisory',sev:'Moderate',desc:'Until April 17 05:00 PDT. NWS Las Vegas NV.',col:'var(--amber)'},
+    {type:'Frost Advisory',sev:'Minor',desc:'Until April 16 09:00 PDT. NWS Medford OR.',col:'var(--cyan)'},
+    {type:'Lake Wind Advisory',sev:'Moderate',desc:'Until April 16 07:00 PDT. NWS Reno NV.',col:'var(--amber)'},
+  ].forEach(a=>{
+    const cls=a.sev==='Severe'?'crit':a.sev==='Moderate'?'warn':'info';
+    const el=document.createElement('div');el.className='aitem '+cls;
+    el.innerHTML=`
+      <div class="atype" style="color:${a.col};text-shadow:0 0 8px ${a.col}">${a.type}</div>
+      <div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div>
+      <div class="adesc">${a.desc}</div>
+      <div class="atime">NOAA NWS · OPEN</div>`;
+    noaa.appendChild(el);
+  });
+}
+
+function addFeed(text,sub,color,badge){
+  feedCount++;
+  const feed=document.getElementById('feed');
+  const el=document.createElement('div');el.className='fitem';
+  el.innerHTML=`
+    <div class="fdot" style="background:${color};box-shadow:0 0 4px ${color}"></div>
+    <div class="ftime">${ts()}</div>
+    <div><div class="ftxt">${text}</div>${sub?`<div class="fsub">${sub}</div>`:''}</div>
+    ${badge?`<div class="fbadge" style="color:${color};border-color:${color}">${badge}</div>`:''}`;
+  feed.insertBefore(el,feed.firstChild);
+  while(feed.children.length>80)feed.removeChild(feed.lastChild);
+  document.getElementById('feed-cnt').textContent=feedCount+' events';
+}
+
+function animWave(){
+  Object.keys(wdata).forEach(k=>{
+    wdata[k].push(wdata[k].shift());
+    const l=wdata[k].length-1;
+    wdata[k][l]=Math.max(.05,Math.min(.95,wdata[k][l]+(Math.random()-.5)*.05));
+  });
+  drawWave();
+}
+
+// ── WEBSOCKET ──
+function connectWS(){
+  try{
+    ws=new WebSocket('ws://127.0.0.1:3001/ws');
+    ws.onopen=()=>{
+      document.getElementById('conn').textContent='LIVE';
+      document.getElementById('conn').className='conn ok';
+      addFeed('WebSocket connected','Real-time PENS backend streaming','var(--teal)','WS');
+    };
+    ws.onmessage=(e)=>{
+      try{
+        const d=JSON.parse(e.data);
+        Object.keys(d).forEach(k=>{if(S[k]!==undefined)S[k]=d[k];});
+        if(d.event)addFeed(d.event.text,d.event.sub,d.event.color||'var(--cyan)',d.event.badge||'');
+        render();
+      }catch(e){}
+    };
+    ws.onclose=()=>{
+      document.getElementById('conn').textContent='RECONNECTING';
+      document.getElementById('conn').className='conn err';
+      setTimeout(connectWS,3000);
+    };
+    ws.onerror=()=>{
+      document.getElementById('conn').textContent='OFFLINE';
+      document.getElementById('conn').className='conn err';
+    };
+  }catch(e){}
+}
+
+function simTick(){
+  if(ws&&ws.readyState===WebSocket.OPEN)return;
+  cycle++;
+  S.solar=Math.max(0,S.solar+(Math.random()-.4)*10);
+  S.wind=Math.max(0,S.wind+(Math.random()-.5)*.1);
+  S.temp+=(Math.random()-.5)*.08;
+  S.demand=Math.max(15000,S.demand+(Math.random()-.5)*100);
+  const evs=[
+    {t:`Grid Twin cycle #${cycle}`,s:`Solar:${S.solar.toFixed(0)}W/m² Wind:${S.wind.toFixed(2)}m/s Temp:${S.temp.toFixed(1)}°C`,c:'var(--t2)',b:'SENSOR'},
+    {t:`EIA demand: ${S.demand.toFixed(0)} MWh`,s:'California ISO · CAISO',c:'var(--amber)',b:'EIA'},
+    {t:`Health: ${S.health.toFixed(1)}/100`,s:'All organs nominal',c:'var(--teal)',b:'OK'},
+    {t:'USGS water data received',s:'Sacramento River station 11447650',c:'var(--cyan)',b:'USGS'},
+    {t:'Anomaly check — no issues',s:'All thresholds within normal range',c:'var(--teal)',b:'ANOMALY'},
+  ];
+  const ev=evs[cycle%evs.length];
+  addFeed(ev.t,ev.s,ev.c,ev.b);render();
+}
+
+setTimeout(()=>{
+  render();drawWave();
+  addFeed('PENS initialised','Grid Twin · HQCOE · AMIL · TimescaleDB online','var(--teal)','BOOT');
+  addFeed('EIA API connected','California ISO hourly demand streaming','var(--amber)','EIA');
+  addFeed('Open-Meteo connected','Solar and wind speed live','var(--cyan)','WEATHER');
+  addFeed('USGS connected','Sacramento River monitoring active','var(--cyan)','WATER');
+  addFeed('NOAA connected','10 active weather alerts loaded','var(--rd)','ALERT');
+  addFeed('Gas loaded','US Lower 48: 1,911 Bcf — all regions normal','var(--amber)','GAS');
+  addFeed('Health: 89.5/100','HEALTHY — risk: 2.2/100','var(--teal)','HEALTH');
+},100);
+
+setInterval(simTick,4000);
+setInterval(animWave,80);
+setInterval(()=>{document.getElementById('clk').textContent=
+  new Date().toUTCString().slice(17,25)+' UTC';},1000);
+connectWS();
+</script>
+</body>
+</html>
