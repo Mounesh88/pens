@@ -3,235 +3,200 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PENS — Grid OS</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>PENS GRID OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@200;300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#06020f;--p1:#08041a;--p2:#0a0620;
-  --cyan:#00e5ff;--cyan2:#00b8d4;
-  --mag:#9900cc;--mag2:#7700aa;
-  --teal:#00ffaa;--amber:#ff9500;
-  --rd:#ff2244;--grn:#00ff88;
-  --tx:#b8d8e8;--t2:#4a7080;--t3:#1a3040;
-  --orb:'Orbitron',monospace;
-  --raj:'Rajdhani',sans-serif;
-  --mono:'Share Tech Mono',monospace;
+  --bg:#03060c;--p1:#040a12;--p2:#060d18;--p3:#081220;
+  --cyan:#00f5ff;--cyan2:#00c8d4;--mag:#d400ff;--mag2:#aa00cc;
+  --teal:#00ffb3;--amber:#ff9d00;--rd:#ff1a3a;--grn:#00ff6a;
+  --tx:#d8eef6;--t2:#8abccc;--t3:#5a8090;
+  --orb:'Orbitron',monospace;--exo:'Exo 2',sans-serif;--mono:'Share Tech Mono',monospace;
 }
 html,body{height:100%;background:var(--bg);color:var(--tx);font-family:var(--mono);overflow:hidden}
 body::before{content:'';position:fixed;inset:0;z-index:0;
-  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(80,0,130,.18) 0%,transparent 60%)}
-body::after{content:'';position:fixed;inset:0;z-index:0;
-  background-image:
-    linear-gradient(rgba(0,229,255,.022) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,229,255,.022) 1px,transparent 1px),
-    linear-gradient(rgba(0,229,255,.008) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,229,255,.008) 1px,transparent 1px);
-  background-size:60px 60px,60px 60px,15px 15px,15px 15px}
-
-.app{position:relative;z-index:1;display:grid;grid-template-rows:48px 1fr;height:100vh}
-.body{display:grid;grid-template-columns:210px 1fr 270px;overflow:hidden;position:relative}
-
-/* TOP BAR */
-.topbar{background:rgba(6,2,15,.96);border-bottom:1px solid rgba(0,229,255,.12);
-  display:flex;align-items:center;padding:0 18px;gap:12px}
-.logo{font-family:var(--orb);font-size:13px;font-weight:700;color:var(--cyan);
-  letter-spacing:.2em;text-shadow:0 0 20px rgba(0,229,255,.8)}
-.ldot{width:5px;height:5px;border-radius:50%;background:var(--teal);
-  box-shadow:0 0 8px var(--teal);animation:lp 2s ease infinite;flex-shrink:0}
+  background:radial-gradient(ellipse 70% 60% at 50% 35%,rgba(160,0,220,.1) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 30% at 20% 80%,rgba(0,245,255,.04) 0%,transparent 50%),
+    radial-gradient(ellipse 40% 30% at 80% 80%,rgba(0,245,255,.04) 0%,transparent 50%)}
+.circuit-bg{position:fixed;inset:0;z-index:0;
+  background-image:linear-gradient(rgba(0,245,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,245,255,.018) 1px,transparent 1px),
+    linear-gradient(rgba(0,245,255,.007) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,245,255,.007) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px}
+.circuit-bg::after{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(90deg,transparent 30%,rgba(0,245,255,.05) 30%,rgba(0,245,255,.05) 30.15%,transparent 30.15%),
+    linear-gradient(transparent 15%,rgba(212,0,255,.03) 15%,rgba(212,0,255,.03) 15.1%,transparent 15.1%),
+    linear-gradient(90deg,transparent 60%,rgba(0,245,255,.03) 60%,rgba(0,245,255,.03) 60.1%,transparent 60.1%),
+    linear-gradient(transparent 70%,rgba(0,245,255,.03) 70%,rgba(0,245,255,.03) 70.1%,transparent 70.1%);
+  background-size:100% 100%}
+.app{position:relative;z-index:1;display:grid;grid-template-rows:50px 1fr;height:100vh}
+.body{display:grid;grid-template-columns:220px 1fr 275px;overflow:hidden;position:relative}
+.topbar{background:rgba(2,5,9,.97);border-bottom:1px solid rgba(0,245,255,.1);
+  display:flex;align-items:center;padding:0 20px;gap:14px}
+.logo{font-family:var(--orb);font-size:14px;font-weight:800;color:var(--cyan);
+  letter-spacing:.25em;text-shadow:0 0 20px rgba(0,245,255,.9),0 0 50px rgba(0,245,255,.3);flex-shrink:0}
+.ldot{width:6px;height:6px;border-radius:50%;background:var(--teal);
+  box-shadow:0 0 10px var(--teal);animation:lp 2s ease infinite;flex-shrink:0}
 @keyframes lp{0%,100%{opacity:1}50%{opacity:.2}}
-.tsep{width:1px;height:18px;background:rgba(0,229,255,.08);flex-shrink:0}
-.tg{display:flex;flex-direction:column;gap:1px}
-.tgl{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em}
-.tgv{font-size:10px;color:var(--tx)}
-.hbar{display:flex;align-items:center;gap:7px}
-.htrack{width:80px;height:2px;background:rgba(0,229,255,.08);border-radius:1px;overflow:hidden}
+.tsep{width:1px;height:22px;background:rgba(0,245,255,.1);flex-shrink:0}
+.tg{display:flex;flex-direction:column;gap:2px}
+.tgl{font-family:var(--orb);font-size:8px;color:#7abacc;letter-spacing:.12em;text-transform:uppercase}
+.tgv{font-family:var(--exo);font-size:12px;color:#e0f0f8;font-weight:500}
+.hbar{display:flex;align-items:center;gap:8px}
+.htrack{width:90px;height:2px;background:rgba(0,245,255,.08);border-radius:1px;overflow:hidden}
 .hfill{height:100%;border-radius:1px;background:linear-gradient(90deg,var(--cyan2),var(--cyan));
-  transition:width 1.2s ease;box-shadow:0 0 6px var(--cyan)}
-.conn{font-family:var(--orb);font-size:8px;padding:2px 8px;border-radius:2px;
-  letter-spacing:.1em;border:1px solid;flex-shrink:0}
-.ok{color:var(--teal);border-color:rgba(0,255,170,.3);background:rgba(0,255,170,.06);
-  text-shadow:0 0 8px var(--teal)}
-.err{color:var(--rd);border-color:rgba(255,34,68,.3);background:rgba(255,34,68,.06)}
-.clk{font-family:var(--orb);font-size:10px;color:var(--t2);margin-left:auto;letter-spacing:.05em}
-
-/* LEFT */
-.left{background:rgba(6,2,15,.88);border-right:1px solid rgba(0,229,255,.07);
-  display:flex;flex-direction:column;overflow:hidden}
-.phdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.2em;
-  text-transform:uppercase;padding:10px 12px 7px;
-  border-bottom:1px solid rgba(0,229,255,.05);flex-shrink:0}
-.organs{flex:1;overflow-y:auto;padding:5px}
-.organ{border:1px solid rgba(0,229,255,.07);border-radius:3px;margin-bottom:4px;
-  overflow:hidden;transition:all .25s;background:rgba(8,4,26,.5);
-  cursor:pointer;position:relative}
-.organ:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04);
-  transform:translateX(2px)}
-.organ.active{border-color:var(--cyan);background:rgba(0,229,255,.06);
-  box-shadow:0 0 12px rgba(0,229,255,.1)}
-.organ.warn{border-color:rgba(255,149,0,.3)}
-.organ.crit{border-color:rgba(255,34,68,.4);animation:ca 1.5s ease infinite}
-@keyframes ca{50%{box-shadow:0 0 12px rgba(255,34,68,.15)}}
-.ohdr{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:7px;padding:7px 9px}
-.oicon{width:22px;height:22px;border-radius:3px;display:flex;align-items:center;
-  justify-content:center;font-size:11px;flex-shrink:0}
-.oname{font-family:var(--orb);font-size:7px;color:var(--t2);letter-spacing:.1em;
-  text-transform:uppercase;margin-bottom:1px}
-.oval{font-size:10px;color:var(--tx)}
-.oscore{font-family:var(--orb);font-size:11px;font-weight:600}
-.otrack{height:1px;background:rgba(0,229,255,.05);margin:0 9px 7px}
-.ofill{height:100%;transition:width 1s ease}
-.gas-section{border-top:1px solid rgba(0,229,255,.05);padding:5px;flex-shrink:0}
-.grow{display:flex;align-items:center;justify-content:space-between;padding:4px 7px;
-  border-radius:3px;margin-bottom:3px;background:rgba(8,4,26,.4);
-  border:1px solid rgba(0,229,255,.04)}
-.gname{font-size:7px;color:var(--t2)}
-.gval{font-family:var(--orb);font-size:9px}
-.gbt{height:1px;background:rgba(0,229,255,.04);margin-top:2px;overflow:hidden;border-radius:1px}
+  box-shadow:0 0 8px var(--cyan);transition:width 1.2s ease}
+.conn{font-family:var(--orb);font-size:8px;padding:2px 9px;border-radius:2px;letter-spacing:.1em;border:1px solid;flex-shrink:0}
+.ok{color:var(--teal);border-color:rgba(0,255,179,.3);background:rgba(0,255,179,.05);text-shadow:0 0 8px var(--teal)}
+.err{color:var(--rd);border-color:rgba(255,26,58,.3);background:rgba(255,26,58,.05)}
+.clk{font-family:var(--orb);font-size:11px;color:var(--cyan2);margin-left:auto;letter-spacing:.08em}
+.left{background:rgba(2,5,9,.92);border-right:1px solid rgba(0,245,255,.08);display:flex;flex-direction:column;overflow:hidden}
+.phdr{font-family:var(--orb);font-size:9px;color:#90c8d8;letter-spacing:.15em;text-transform:uppercase;
+  padding:10px 12px 8px;border-bottom:1px solid rgba(0,245,255,.07);flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between}
+.phdr-dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+.organs{flex:1;overflow-y:auto;padding:6px}
+.organ{border:1px solid rgba(0,245,255,.08);border-radius:4px;margin-bottom:5px;overflow:hidden;
+  background:rgba(3,7,14,.7);cursor:pointer;transition:all .25s;position:relative}
+.organ::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--cyan);opacity:0;transition:opacity .25s;box-shadow:0 0 8px var(--cyan)}
+.organ:hover{border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.04)}
+.organ:hover::before{opacity:.6}
+.organ.active{border-color:var(--cyan);background:rgba(0,245,255,.06)}
+.organ.active::before{opacity:1}
+.ohdr{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;padding:8px 10px}
+.oicon{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.oname{font-family:var(--orb);font-size:8px;color:#7abacc;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.oval{font-family:var(--exo);font-size:12px;color:#d8eef6;font-weight:500}
+.oscore{font-family:var(--orb);font-size:13px;font-weight:700}
+.otrack{height:1px;background:rgba(0,245,255,.06);margin:0 10px 8px;overflow:hidden;border-radius:1px}
+.ofill{height:100%;transition:width 1s ease;box-shadow:0 0 6px currentColor}
+.gas-section{border-top:1px solid rgba(0,245,255,.07);padding:5px;flex-shrink:0}
+.grow{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;
+  border-radius:3px;margin-bottom:3px;background:rgba(3,7,14,.6);border:1px solid rgba(0,245,255,.06);transition:border-color .2s}
+.grow:hover{border-color:rgba(0,245,255,.15)}
+.gname{font-family:var(--orb);font-size:8px;color:#8abccc;letter-spacing:.04em}
+.gval{font-family:var(--orb);font-size:10px;font-weight:700}
+.gbt{height:1px;background:rgba(0,245,255,.05);margin-top:3px;overflow:hidden;border-radius:1px}
 .gbf{height:100%;transition:width .8s ease}
-
-/* CENTER */
-.center{display:flex;flex-direction:column;overflow:hidden;position:relative}
-.hero{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:10px 16px 0}
-.grid-health-title{font-family:var(--orb);font-size:11px;font-weight:700;color:var(--cyan);
-  letter-spacing:.4em;text-transform:uppercase;
-  text-shadow:0 0 20px rgba(0,229,255,.9),0 0 40px rgba(0,229,255,.4);margin-bottom:6px}
-.hero-desc{font-size:9px;color:var(--t2);text-align:center;line-height:1.7;
-  max-width:380px;margin-bottom:5px}
-.hero-tags{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
-.htag{font-family:var(--orb);font-size:7px;padding:2px 7px;border-radius:2px;
-  border:1px solid;letter-spacing:.06em}
-.ring-area{position:relative;width:200px;height:200px;flex-shrink:0}
+.center{display:flex;flex-direction:column;overflow:hidden;position:relative;background:rgba(2,4,8,.6)}
+.orb-section{flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding:8px 16px 0}
+.orb-title{font-family:var(--orb);font-size:10px;font-weight:700;color:var(--cyan);
+  letter-spacing:.5em;text-transform:uppercase;
+  text-shadow:0 0 20px rgba(0,245,255,.9),0 0 60px rgba(0,245,255,.3);margin-bottom:5px;position:relative}
+.orb-title::before,.orb-title::after{content:'';position:absolute;top:50%;width:40px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan))}
+.orb-title::before{right:calc(100% + 10px)}
+.orb-title::after{left:calc(100% + 10px);background:linear-gradient(90deg,var(--cyan),transparent)}
+.orb-desc{font-family:var(--exo);font-size:11px;color:#a0ccd8;text-align:center;line-height:1.7;max-width:360px;margin-bottom:5px}
+.orb-tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.otag{font-family:var(--orb);font-size:8px;padding:3px 10px;border-radius:3px;border:1px solid;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.orb-wrap{position:relative;width:200px;height:200px;flex-shrink:0}
 #rcanvas{position:absolute;inset:0;width:200px;height:200px}
-.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center}
-.rscore{font-family:var(--orb);font-size:44px;font-weight:900;color:var(--cyan);
-  line-height:1;text-shadow:0 0 30px rgba(0,229,255,.8);transition:all .5s}
-.runit{font-family:var(--orb);font-size:10px;color:var(--t2);letter-spacing:.1em}
-.rstatus{font-family:var(--orb);font-size:9px;font-weight:600;
-  letter-spacing:.3em;text-transform:uppercase;margin-top:3px;transition:color .5s}
-.mcards{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;
-  padding:6px 14px;flex-shrink:0}
-.mcard{background:rgba(8,4,26,.8);border:1px solid rgba(0,229,255,.08);
-  border-radius:4px;padding:9px 11px;position:relative;overflow:hidden;
-  clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,0 100%)}
-.mlbl{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
-  text-transform:uppercase;margin-bottom:3px}
-.mval{font-family:var(--orb);font-size:18px;font-weight:700;line-height:1;margin-bottom:1px}
-.msub{font-size:7px;color:var(--t3)}
-.bottom{flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;
-  gap:5px;padding:0 14px 10px}
-.feed-panel{background:rgba(8,4,26,.6);border:1px solid rgba(0,229,255,.06);
-  border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
-.fpanel-hdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
-  text-transform:uppercase;padding:7px 10px;
-  border-bottom:1px solid rgba(0,229,255,.05);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.orb-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.orb-score{font-family:var(--orb);font-size:46px;font-weight:900;color:var(--cyan);line-height:1;
+  text-shadow:0 0 30px rgba(0,245,255,.9),0 0 80px rgba(0,245,255,.3);transition:all .5s}
+.orb-unit{font-family:var(--orb);font-size:10px;color:#6a9aaa;letter-spacing:.1em;margin-top:1px}
+.orb-status{font-family:var(--orb);font-size:9px;font-weight:700;letter-spacing:.35em;text-transform:uppercase;margin-top:4px;transition:color .5s}
+.mcards{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:6px 14px;flex-shrink:0}
+.mcard{background:rgba(3,7,14,.85);border:1px solid rgba(0,245,255,.1);border-radius:4px;
+  padding:10px 12px;position:relative;overflow:hidden;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:all .3s}
+.mcard:hover{border-color:rgba(0,245,255,.3);background:rgba(0,245,255,.04)}
+.mcard::after{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;
+  border-width:0 10px 10px 0;border-color:transparent rgba(0,245,255,.15) transparent transparent}
+.mlbl{font-family:var(--orb);font-size:8px;color:#5a8090;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
+.mval{font-family:var(--orb);font-size:22px;font-weight:700;line-height:1;margin-bottom:2px}
+.msub{font-family:var(--exo);font-size:9px;color:#5a8090;font-weight:300}
+.bottom{flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 14px 10px}
+.feed-panel{background:rgba(3,7,14,.75);border:1px solid rgba(0,245,255,.1);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
+.bphdr{font-family:var(--orb);font-size:9px;color:#90c8d8;letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 10px;border-bottom:1px solid rgba(0,245,255,.07);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.bphdr-r{font-size:9px;color:#8abccc;font-weight:500}
 .feed{flex:1;overflow-y:auto;padding:4px;display:flex;flex-direction:column;gap:2px}
-.fitem{display:grid;grid-template-columns:5px 46px 1fr auto;align-items:start;
-  gap:6px;padding:5px 7px;background:rgba(6,2,15,.6);
-  border:1px solid rgba(0,229,255,.04);border-radius:3px;animation:fi .2s ease}
-@keyframes fi{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:none}}
-.fdot{width:4px;height:4px;border-radius:50%;margin-top:3px;flex-shrink:0}
-.ftime{font-size:8px;color:var(--t3);margin-top:1px}
-.ftxt{font-size:8px;color:var(--tx);line-height:1.5}
-.fsub{font-size:7px;color:var(--t2);margin-top:1px}
-.fbadge{font-family:var(--orb);font-size:6px;padding:1px 5px;border-radius:2px;
-  border:1px solid;white-space:nowrap;flex-shrink:0;margin-top:2px}
-.wave-panel{background:rgba(8,4,26,.7);border:1px solid rgba(0,229,255,.08);
-  border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
-.wpanel-hdr{font-family:var(--orb);font-size:7px;color:var(--t3);letter-spacing:.15em;
-  text-transform:uppercase;padding:7px 10px;
-  border-bottom:1px solid rgba(0,229,255,.05);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.fitem{display:grid;grid-template-columns:5px 50px 1fr auto;align-items:start;gap:6px;
+  padding:6px 8px;background:rgba(2,5,9,.6);border:1px solid rgba(0,245,255,.05);
+  border-radius:3px;animation:fi .2s ease;transition:border-color .2s}
+.fitem:hover{border-color:rgba(0,245,255,.18)}
+@keyframes fi{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.fdot{width:5px;height:5px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.ftime{font-size:9px;color:#6a9aaa;margin-top:1px}
+.ftxt{font-family:var(--exo);font-size:10px;color:#d0e8f4;line-height:1.5;font-weight:400}
+.fsub{font-size:8px;color:#8abccc;margin-top:1px}
+.fbadge{font-family:var(--orb);font-size:7px;padding:1px 6px;border-radius:2px;border:1px solid;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.wave-panel{background:rgba(3,7,14,.8);border:1px solid rgba(0,245,255,.1);
+  border-radius:4px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:border-color .3s}
+.wave-panel:hover{border-color:rgba(0,245,255,.3)}
 .wcanvas-wrap{flex:1;position:relative;padding:6px}
 #wcanvas{width:100%;height:100%;display:block}
-
-/* RIGHT */
-.right{background:rgba(6,2,15,.9);border-left:1px solid rgba(0,229,255,.07);
-  display:flex;flex-direction:column;overflow:hidden}
+.right{background:rgba(2,5,9,.92);border-left:1px solid rgba(0,245,255,.08);display:flex;flex-direction:column;overflow:hidden}
 .ascroll{flex:1;overflow-y:auto;padding:5px}
-.nscroll{overflow-y:auto;padding:5px;max-height:170px;
-  border-top:1px solid rgba(0,229,255,.05)}
-.aitem{border:1px solid rgba(0,229,255,.05);border-radius:3px;padding:7px 9px;
-  margin-bottom:4px;background:rgba(8,4,26,.5);transition:border-color .2s}
-.aitem:hover{border-color:rgba(0,229,255,.15)}
-.aitem.crit{border-color:rgba(255,34,68,.3);background:rgba(255,34,68,.03)}
-.aitem.warn{border-color:rgba(255,149,0,.2);background:rgba(255,149,0,.02)}
-.aitem.info{border-color:rgba(0,229,255,.12);background:rgba(0,229,255,.015)}
-.atype{font-family:var(--orb);font-size:8px;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;margin-bottom:3px}
-.adesc{font-size:8px;color:var(--t2);line-height:1.5;margin-bottom:2px}
-.atime{font-size:7px;color:var(--t3)}
-.asev{font-family:var(--orb);font-size:7px;padding:1px 5px;border-radius:2px;
-  border:1px solid;float:right;margin-top:-14px}
-
-/* DETAIL PANEL */
-.detail{
-  position:fixed;top:48px;right:0;bottom:0;
-  width:480px;
-  z-index:200;
-  background:rgba(6,2,15,.98);
-  border-left:1px solid rgba(0,229,255,.15);
+.nscroll{overflow-y:auto;padding:5px;max-height:175px;border-top:1px solid rgba(0,245,255,.07)}
+.aitem{border:1px solid rgba(0,245,255,.07);border-radius:3px;padding:9px 10px;margin-bottom:5px;
+  background:rgba(3,7,14,.6);transition:all .2s;position:relative;overflow:hidden}
+.aitem::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px}
+.aitem:hover{border-color:rgba(0,245,255,.2)}
+.aitem.crit{border-color:rgba(255,26,58,.4);background:rgba(255,26,58,.04)}
+.aitem.crit::before{background:var(--rd);box-shadow:0 0 8px var(--rd)}
+.aitem.warn{border-color:rgba(255,157,0,.35);background:rgba(255,157,0,.03)}
+.aitem.warn::before{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.aitem.info{border-color:rgba(0,245,255,.2);background:rgba(0,245,255,.02)}
+.aitem.info::before{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.atype{font-family:var(--orb);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;padding-left:10px}
+.adesc{font-family:var(--exo);font-size:11px;color:#a8d0dc;line-height:1.6;margin-bottom:4px;padding-left:10px;font-weight:400}
+.atime{font-size:9px;color:#6a9aaa;padding-left:10px}
+.asev{font-family:var(--orb);font-size:8px;padding:2px 7px;border-radius:2px;border:1px solid;float:right;margin-top:-16px;letter-spacing:.06em}
+.detail{position:fixed;top:50px;right:0;bottom:0;width:420px;
+  background:rgba(3,7,14,.99);border-left:2px solid rgba(0,245,255,.25);
   display:flex;flex-direction:column;
-  transform:translateX(100%);
-  transition:transform .3s ease;
-  box-shadow:-10px 0 40px rgba(0,0,0,.5);
-}
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  z-index:200;box-shadow:-20px 0 60px rgba(0,0,0,.7)}
 .detail.open{transform:translateX(0)}
-.detail-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 14px;
-  border-bottom:1px solid rgba(0,229,255,.1);
-  flex-shrink:0;
-}
-.detail-title{font-family:var(--orb);font-size:11px;color:var(--cyan);
-  letter-spacing:.15em;text-transform:uppercase;
-  text-shadow:0 0 10px rgba(0,229,255,.5)}
-.detail-close{
-  font-family:var(--orb);font-size:16px;color:var(--t2);
-  cursor:pointer;padding:2px 8px;border:1px solid rgba(0,229,255,.1);
-  border-radius:3px;transition:all .2s;background:transparent;
-}
-.detail-close:hover{color:var(--cyan);border-color:var(--cyan)}
-.detail-stats{
-  display:grid;grid-template-columns:1fr 1fr;gap:6px;
-  padding:12px 14px;flex-shrink:0;
-  border-bottom:1px solid rgba(0,229,255,.06);
-}
-.dstat{background:rgba(8,4,26,.8);border:1px solid rgba(0,229,255,.08);
-  border-radius:4px;padding:8px 10px}
-.dstat-l{font-family:var(--orb);font-size:7px;color:var(--t3);
-  letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px}
-.dstat-v{font-family:var(--orb);font-size:16px;font-weight:700}
-.detail-chart-wrap{padding:10px 14px;flex-shrink:0;
-  border-bottom:1px solid rgba(0,229,255,.06)}
-.detail-chart-lbl{font-family:var(--orb);font-size:7px;color:var(--t3);
-  letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
-#detail-canvas{width:100%;height:80px;display:block}
-.detail-table-wrap{flex:1;overflow-y:auto;padding:10px 14px}
-.detail-table-lbl{font-family:var(--orb);font-size:7px;color:var(--t3);
-  letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px}
-.dtable{width:100%;border-collapse:collapse;font-size:8px}
-.dtable th{font-family:var(--orb);font-size:7px;color:var(--t3);
-  letter-spacing:.1em;text-transform:uppercase;padding:4px 6px;
-  border-bottom:1px solid rgba(0,229,255,.06);text-align:left;
-  position:sticky;top:0;background:rgba(6,2,15,.98)}
-.dtable td{padding:5px 6px;border-bottom:1px solid rgba(0,229,255,.03);
-  color:var(--t2);vertical-align:top}
-.dtable td:nth-child(3){color:var(--tx);font-weight:500}
-.dtable tr:hover td{background:rgba(0,229,255,.02)}
-.loading{padding:20px;text-align:center;color:var(--t3);font-size:9px;
-  font-family:var(--orb);letter-spacing:.1em}
-
+.detail-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;border-bottom:1px solid rgba(0,245,255,.1);flex-shrink:0;background:rgba(0,245,255,.03)}
+.detail-title{font-family:var(--orb);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+.detail-close{font-family:var(--orb);font-size:14px;color:#8abccc;cursor:pointer;
+  padding:4px 12px;border:1px solid rgba(0,245,255,.15);border-radius:3px;background:transparent;transition:all .2s}
+.detail-close:hover{color:var(--cyan);border-color:var(--cyan);box-shadow:0 0 10px rgba(0,245,255,.2)}
+.detail-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 16px;flex-shrink:0;border-bottom:1px solid rgba(0,245,255,.07)}
+.dstat{background:rgba(3,7,14,.9);border:1px solid rgba(0,245,255,.1);border-radius:4px;padding:11px 13px}
+.dstat-l{font-family:var(--orb);font-size:10px;color:#6a9aaa;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+.dstat-v{font-family:var(--orb);font-size:24px;font-weight:700;line-height:1}
+.dstat-u{font-size:11px;color:#8abccc;margin-left:5px}
+.detail-chart-wrap{padding:14px 16px;flex-shrink:0;border-bottom:1px solid rgba(0,245,255,.07)}
+.detail-chart-lbl{font-family:var(--orb);font-size:10px;color:#6a9aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+#detail-canvas{width:100%;height:100px;display:block}
+.detail-table-wrap{flex:1;overflow-y:auto;padding:14px 16px}
+.detail-table-lbl{font-family:var(--orb);font-size:10px;color:#6a9aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px}
+.dtable{width:100%;border-collapse:collapse;font-size:11px}
+.dtable th{font-family:var(--orb);font-size:10px;color:#8abccc;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 9px;border-bottom:1px solid rgba(0,245,255,.08);text-align:left;position:sticky;top:0;background:rgba(3,7,14,.99)}
+.dtable td{padding:8px 9px;border-bottom:1px solid rgba(0,245,255,.05);color:#a0ccd8;font-family:var(--mono);vertical-align:top}
+.dtable td:nth-child(3){color:#d8eef6;font-weight:500}
+.dtable tr:hover td{background:rgba(0,245,255,.03)}
+.dloading{padding:24px;text-align:center;color:#8abccc;font-family:var(--orb);font-size:9px;letter-spacing:.15em}
+.forecast-full{position:fixed;inset:50px 0 0 0;background:rgba(2,4,8,.99);
+  border-top:2px solid rgba(0,245,255,.2);display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:300}
+.forecast-full.open{transform:translateY(0)}
+.forecast-hdr{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;border-bottom:1px solid rgba(0,245,255,.1);flex-shrink:0;background:rgba(0,245,255,.02)}
+.forecast-title{font-family:var(--orb);font-size:13px;font-weight:700;color:var(--cyan);
+  letter-spacing:.2em;text-transform:uppercase;text-shadow:0 0 20px rgba(0,245,255,.5)}
+.fc-stat{background:rgba(3,7,14,.9);border:1px solid rgba(0,245,255,.1);border-radius:4px;padding:12px 14px}
+.fc-stat-l{font-family:var(--orb);font-size:9px;color:#6a9aaa;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
+.fc-stat-v{font-family:var(--orb);font-size:22px;font-weight:700;line-height:1}
+.fc-stat-u{font-size:10px;color:#8abccc;margin-left:4px}
 ::-webkit-scrollbar{width:2px}
-::-webkit-scrollbar-thumb{background:rgba(0,229,255,.08)}
+::-webkit-scrollbar-thumb{background:rgba(0,245,255,.12);border-radius:2px}
 </style>
 </head>
 <body>
+<div class="circuit-bg"></div>
 <div class="app">
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="logo">PENS GRID OS</div>
   <div class="ldot"></div>
@@ -240,7 +205,7 @@ body::after{content:'';position:fixed;inset:0;z-index:0;
     <div class="tgl">Grid health</div>
     <div class="hbar">
       <div class="htrack"><div class="hfill" id="top-bar" style="width:0%"></div></div>
-      <div class="tgv" id="top-val" style="color:var(--cyan)">--</div>
+      <div class="tgv" id="top-val" style="color:var(--cyan);font-size:12px;font-weight:600">--</div>
     </div>
   </div>
   <div class="tsep"></div>
@@ -253,142 +218,128 @@ body::after{content:'';position:fixed;inset:0;z-index:0;
 
 <div class="body">
 
-<!-- LEFT -->
 <div class="left">
-  <div class="phdr">ICU — 6 organs · click to inspect</div>
+  <div class="phdr">ICU — 8 organs monitored <div class="phdr-dot"></div></div>
   <div class="organs">
     <div class="organ" id="org-electricity" onclick="openDetail('electricity','Electricity Demand','var(--amber)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(255,149,0,.1)">⚡</div>
-        <div><div class="oname">Electricity</div><div class="oval" id="ov-elec">-- MWh</div></div>
-        <div class="oscore" id="os-elec">--</div>
+        <div class="oicon" style="background:rgba(255,157,0,.1)">⚡</div>
+        <div><div class="oname">Electricity</div><div class="oval" id="ov-electricity">24791 MWh</div></div>
+        <div class="oscore" id="os-electricity" style="color:var(--teal)">100/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-elec" style="width:0%;background:var(--amber)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-electricity" style="width:100%;background:var(--amber)"></div></div>
     </div>
     <div class="organ" id="org-solar" onclick="openDetail('solar','Solar Irradiance','var(--amber)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(255,149,0,.08)">☀</div>
-        <div><div class="oname">Solar</div><div class="oval" id="ov-solar">-- W/m²</div></div>
-        <div class="oscore" id="os-solar">--</div>
+        <div class="oicon" style="background:rgba(255,157,0,.08)">☀</div>
+        <div><div class="oname">Solar</div><div class="oval" id="ov-solar">960 W/m²</div></div>
+        <div class="oscore" id="os-solar" style="color:var(--teal)">96/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-solar" style="width:0%;background:var(--amber)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-solar" style="width:96%;background:var(--amber)"></div></div>
     </div>
     <div class="organ" id="org-wind" onclick="openDetail('wind','Wind Speed','var(--cyan)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(0,229,255,.08)">💨</div>
-        <div><div class="oname">Wind</div><div class="oval" id="ov-wind">-- m/s</div></div>
-        <div class="oscore" id="os-wind">--</div>
+        <div class="oicon" style="background:rgba(0,245,255,.08)">💨</div>
+        <div><div class="oname">Wind</div><div class="oval" id="ov-wind">2.41 m/s</div></div>
+        <div class="oscore" id="os-wind" style="color:var(--teal)">100/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-wind" style="width:0%;background:var(--cyan)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-wind" style="width:100%;background:var(--cyan)"></div></div>
     </div>
     <div class="organ" id="org-weather" onclick="openDetail('weather','Temperature','var(--teal)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(0,255,170,.08)">🌡</div>
-        <div><div class="oname">Temperature</div><div class="oval" id="ov-temp">-- °C</div></div>
-        <div class="oscore" id="os-temp">--</div>
+        <div class="oicon" style="background:rgba(0,255,179,.08)">🌡</div>
+        <div><div class="oname">Temperature</div><div class="oval" id="ov-weather">19.5°C</div></div>
+        <div class="oscore" id="os-weather" style="color:var(--teal)">100/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-temp" style="width:0%;background:var(--teal)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-weather" style="width:100%;background:var(--teal)"></div></div>
     </div>
     <div class="organ" id="org-gas" onclick="openDetail('gas','Gas Storage','var(--mag)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(153,0,204,.12)">🔥</div>
-        <div><div class="oname">Gas storage</div><div class="oval" id="ov-gas">-- Bcf</div></div>
-        <div class="oscore" id="os-gas">--</div>
+        <div class="oicon" style="background:rgba(212,0,255,.1)">🔥</div>
+        <div><div class="oname">Gas Storage</div><div class="oval" id="ov-gas">1911 Bcf</div></div>
+        <div class="oscore" id="os-gas" style="color:var(--teal)">76/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-gas" style="width:0%;background:var(--mag)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-gas" style="width:76%;background:var(--mag)"></div></div>
     </div>
     <div class="organ" id="org-water" onclick="openDetail('water','River Water','var(--cyan)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(0,229,255,.08)">💧</div>
+        <div class="oicon" style="background:rgba(0,245,255,.08)">💧</div>
         <div><div class="oname">Water</div><div class="oval" id="ov-water">Sacramento River</div></div>
-        <div class="oscore" id="os-water">--</div>
+        <div class="oscore" id="os-water" style="color:var(--teal)">100/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-water" style="width:0%;background:var(--cyan)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-water" style="width:100%;background:var(--cyan)"></div></div>
     </div>
-    <div class="organ" id="org-forecast" onclick="openDetail('forecast','7-Day Forecast Risk','var(--mag)')">
+    <div class="organ" id="org-forecast" onclick="openDetail('forecast','Forecast Risk','var(--mag)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(153,0,204,.1)">📡</div>
-        <div><div class="oname">Forecast</div><div class="oval" id="ov-forecast">-- risk score</div></div>
-        <div class="oscore" id="os-forecast">--</div>
+        <div class="oicon" style="background:rgba(212,0,255,.08)">📡</div>
+        <div><div class="oname">Forecast</div><div class="oval" id="ov-forecast">2.3 risk</div></div>
+        <div class="oscore" id="os-forecast" style="color:var(--teal)">98/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-forecast" style="width:0%;background:var(--mag)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-forecast" style="width:98%;background:var(--mag)"></div></div>
     </div>
     <div class="organ" id="org-health" onclick="openDetail('health','Grid Health Score','var(--grn)')">
       <div class="ohdr">
-        <div class="oicon" style="background:rgba(0,255,136,.08)">🏥</div>
-        <div><div class="oname">Health score</div><div class="oval" id="ov-health">-- /100</div></div>
-        <div class="oscore" id="os-health">--</div>
+        <div class="oicon" style="background:rgba(0,255,106,.08)">🏥</div>
+        <div><div class="oname">Health Score</div><div class="oval" id="ov-health">89.5/100</div></div>
+        <div class="oscore" id="os-health" style="color:var(--teal)">90/100</div>
       </div>
-      <div class="otrack"><div class="ofill" id="ob-health" style="width:0%;background:var(--grn)"></div></div>
+      <div class="otrack"><div class="ofill" id="ob-health" style="width:90%;background:var(--grn)"></div></div>
     </div>
   </div>
-  <div class="phdr">Gas regions — US weekly</div>
+  <div class="phdr">Gas regions — US weekly <div class="phdr-dot"></div></div>
   <div class="gas-section" id="gas-regions"></div>
 </div>
 
-<!-- CENTER -->
 <div class="center">
-  <div class="hero">
-    <div class="grid-health-title">Grid Health</div>
-    <div class="hero-desc" id="hero-desc">All six grid organs within normal parameters. California ISO operating nominally.</div>
-    <div class="hero-tags" id="hero-tags"></div>
-    <div class="ring-area">
+  <div class="orb-section">
+    <div class="orb-title">Grid Health</div>
+    <div class="orb-desc" id="orb-desc">All six grid organs within normal parameters. California ISO operating nominally.</div>
+    <div class="orb-tags" id="orb-tags"></div>
+    <div class="orb-wrap">
       <canvas id="rcanvas" width="200" height="200"></canvas>
-      <div class="ring-center">
-        <div class="rscore" id="rscore">89.5</div>
-        <div class="runit">/100</div>
-        <div class="rstatus" id="rstatus" style="color:var(--teal)">HEALTHY</div>
+      <div class="orb-inner">
+        <div class="orb-score" id="orb-score">89.5</div>
+        <div class="orb-unit">/100</div>
+        <div class="orb-status" id="orb-status" style="color:var(--teal)">HEALTHY</div>
       </div>
     </div>
   </div>
-
   <div class="mcards">
     <div class="mcard">
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--amber);opacity:.6"></div>
-      <div class="mlbl">Solar irradiance</div>
-      <div class="mval" id="m-solar" style="color:var(--amber);text-shadow:0 0 20px rgba(255,149,0,.4)">--</div>
-      <div class="msub">W/m² live</div>
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent)"></div>
+      <div class="mlbl">Solar Irradiance</div>
+      <div class="mval" id="m-solar" style="color:var(--amber);text-shadow:0 0 20px rgba(255,157,0,.5)">960</div>
+      <div class="msub">W/m² · live</div>
     </div>
     <div class="mcard">
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--cyan);opacity:.6"></div>
-      <div class="mlbl">Wind speed</div>
-      <div class="mval" id="m-wind" style="color:var(--cyan);text-shadow:0 0 20px rgba(0,229,255,.4)">--</div>
-      <div class="msub">m/s live</div>
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)"></div>
+      <div class="mlbl">Wind Speed</div>
+      <div class="mval" id="m-wind" style="color:var(--cyan);text-shadow:0 0 20px rgba(0,245,255,.5)">2.41</div>
+      <div class="msub">m/s · live</div>
     </div>
     <div class="mcard">
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--teal);opacity:.6"></div>
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent)"></div>
       <div class="mlbl">Temperature</div>
-      <div class="mval" id="m-temp" style="color:var(--teal);text-shadow:0 0 20px rgba(0,255,170,.4)">--</div>
-      <div class="msub">°C California</div>
+      <div class="mval" id="m-temp" style="color:var(--teal);text-shadow:0 0 20px rgba(0,255,179,.5)">19.5°C</div>
+      <div class="msub">California · live</div>
     </div>
     <div class="mcard">
-      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:var(--mag);opacity:.6"></div>
-      <div class="mlbl">7-day risk</div>
-      <div class="mval" id="m-risk" style="color:var(--mag);text-shadow:0 0 20px rgba(153,0,204,.4)">--</div>
-      <div class="msub">forecast index</div>
+      <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--mag),transparent)"></div>
+      <div class="mlbl">7-Day Risk</div>
+      <div class="mval" id="m-risk" style="color:var(--mag);text-shadow:0 0 20px rgba(212,0,255,.5)">2.3</div>
+      <div class="msub">/100 · forecast</div>
     </div>
   </div>
-
   <div class="bottom">
     <div class="feed-panel">
-      <div class="fpanel-hdr">
-        <span>Live event stream</span>
-        <span id="feed-cnt" style="color:var(--t2)">0 events</span>
-      </div>
+      <div class="bphdr"><span>Live Event Stream</span><span class="bphdr-r" id="feed-cnt">0 events</span></div>
       <div class="feed" id="feed"></div>
     </div>
-    <div class="wave-panel">
-      <div class="wpanel-hdr">
-        <span>7-day forecast breakdown</span>
-        <span style="color:var(--t2);font-size:9px">Solar · Wind · Temp · Risk</span>
-      </div>
-      <div class="wcanvas-wrap">
-        <canvas id="wcanvas"></canvas>
-      </div>
+    <div class="wave-panel" onclick="openForecast()">
+      <div class="bphdr"><span>7-Day Forecast with Breakdown</span><span class="bphdr-r" style="color:var(--cyan)">Click to expand ↗</span></div>
+      <div class="wcanvas-wrap"><canvas id="wcanvas"></canvas></div>
     </div>
   </div>
-
-  <!-- DETAIL PANEL (slides in from right) -->
   <div class="detail" id="detail-panel">
     <div class="detail-hdr">
       <div class="detail-title" id="detail-title">--</div>
@@ -396,307 +347,157 @@ body::after{content:'';position:fixed;inset:0;z-index:0;
     </div>
     <div class="detail-stats" id="detail-stats"></div>
     <div class="detail-chart-wrap">
-      <div class="detail-chart-lbl">Last 24 hours</div>
+      <div class="detail-chart-lbl">Last 24 hours — real database records</div>
       <canvas id="detail-canvas"></canvas>
     </div>
     <div class="detail-table-wrap">
-      <div class="detail-table-lbl">Database records</div>
+      <div class="detail-table-lbl">TimescaleDB records</div>
       <table class="dtable">
-        <thead><tr>
-          <th>Time</th><th>Metric</th><th>Value</th><th>Unit</th>
-        </tr></thead>
+        <thead><tr><th>Time</th><th>Metric</th><th>Value</th><th>Unit</th></tr></thead>
         <tbody id="detail-tbody"></tbody>
       </table>
     </div>
   </div>
 </div>
 
-<!-- RIGHT -->
 <div class="right">
-  <div class="phdr">Grid alerts <span id="acnt" style="color:var(--rd);margin-left:6px"></span></div>
+  <div class="phdr">Grid Alerts <span id="acnt" style="color:var(--rd);margin-left:6px;font-size:10px;font-weight:700"></span><div class="phdr-dot" style="background:var(--rd);box-shadow:0 0 6px var(--rd)"></div></div>
   <div class="ascroll" id="alerts-wrap"></div>
-  <div class="phdr" style="border-top:1px solid rgba(0,229,255,.05)">NOAA weather alerts</div>
+  <div class="phdr" style="border-top:1px solid rgba(0,245,255,.07)">NOAA Weather Alerts <div class="phdr-dot"></div></div>
   <div class="nscroll" id="noaa-wrap"></div>
 </div>
 
 </div>
+
+<div class="forecast-full" id="forecast-panel">
+  <div class="forecast-hdr">
+    <div class="forecast-title">7-Day Forecast with Breakdown</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="display:flex;gap:14px;font-family:var(--orb);font-size:9px;font-weight:600">
+        <span style="color:var(--amber)">■ Solar</span>
+        <span style="color:var(--cyan)">■ Wind</span>
+        <span style="color:var(--teal)">■ Temperature</span>
+        <span style="color:var(--mag)">■ Risk</span>
+      </div>
+      <button class="detail-close" onclick="closeForecast()">✕</button>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:14px 20px;flex-shrink:0;border-bottom:1px solid rgba(0,245,255,.07)">
+    <div class="fc-stat"><div class="fc-stat-l">Solar in 6h</div><div class="fc-stat-v" style="color:var(--amber)" id="fc-solar6">--<span class="fc-stat-u">W/m²</span></div></div>
+    <div class="fc-stat"><div class="fc-stat-l">Wind in 6h</div><div class="fc-stat-v" style="color:var(--cyan)" id="fc-wind6">--<span class="fc-stat-u">m/s</span></div></div>
+    <div class="fc-stat"><div class="fc-stat-l">Temp in 6h</div><div class="fc-stat-v" style="color:var(--teal)" id="fc-temp6">--<span class="fc-stat-u">°C</span></div></div>
+    <div class="fc-stat"><div class="fc-stat-l">Risk 7-day</div><div class="fc-stat-v" style="color:var(--mag)" id="fc-risk7">--<span class="fc-stat-u">/100</span></div></div>
+  </div>
+  <div style="flex:1;padding:12px 20px 14px;display:flex;flex-direction:column;gap:10px;min-height:0">
+    <div style="font-family:var(--orb);font-size:9px;color:#7abacc;letter-spacing:.1em;text-transform:uppercase">72-hour ML forecast — trained on real TimescaleDB data</div>
+    <canvas id="forecast-canvas" style="width:100%;flex:1;display:block;min-height:0"></canvas>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;flex-shrink:0">
+      <div class="fc-stat"><div class="fc-stat-l">Solar 24h avg</div><div class="fc-stat-v" style="color:var(--amber)" id="fc-s24">--</div></div>
+      <div class="fc-stat"><div class="fc-stat-l">Wind 24h avg</div><div class="fc-stat-v" style="color:var(--cyan)" id="fc-w24">--</div></div>
+      <div class="fc-stat"><div class="fc-stat-l">Temp 24h avg</div><div class="fc-stat-v" style="color:var(--teal)" id="fc-t24">--</div></div>
+      <div class="fc-stat"><div class="fc-stat-l">Freeze risk</div><div class="fc-stat-v" style="color:var(--mag)" id="fc-freeze">0.0%</div></div>
+    </div>
+  </div>
+</div>
+
 </div>
 
 <script>
-let feedCount=0, ws=null, cycle=0;
-const S={
-  health:89.5,solar:830,wind:2.73,
-  temp:18.3,demand:24582,risk:2.2,
-  gasTotal:1911,alerts:10,
-};
+let feedCount=0,ws=null,cycle=0;
+const S={health:89.5,solar:960,wind:2.41,temp:19.5,demand:24791,risk:2.3,gasTotal:1911,alerts:10};
 const W_LEN=120;
 const wdata={
-  solar:Array.from({length:W_LEN},(_,i)=>0.3+Math.sin(i*.08)*.25),
-  wind: Array.from({length:W_LEN},(_,i)=>0.4+Math.sin(i*.06+1)*.2),
-  temp: Array.from({length:W_LEN},(_,i)=>0.5+Math.sin(i*.05+2)*.15),
-  risk: Array.from({length:W_LEN},(_,i)=>0.1+Math.sin(i*.1+3)*.08),
+  solar:Array.from({length:W_LEN},(_,i)=>0.35+Math.sin(i*.08)*.28),
+  wind: Array.from({length:W_LEN},(_,i)=>0.42+Math.sin(i*.06+1)*.22),
+  temp: Array.from({length:W_LEN},(_,i)=>0.52+Math.sin(i*.05+2)*.18),
+  risk: Array.from({length:W_LEN},(_,i)=>0.12+Math.sin(i*.1+3)*.09),
 };
-
 function ts(){return new Date().toTimeString().slice(0,8)}
 function sc(s){return s>=80?'var(--teal)':s>=60?'var(--amber)':'var(--rd)'}
 
-// ── RING ──
 function drawRing(score){
   const cv=document.getElementById('rcanvas');
   const ctx=cv.getContext('2d');
   const W=cv.width,H=cv.height,cx=W/2,cy=H/2,R=88;
   ctx.clearRect(0,0,W,H);
-
-  // Outer glow
-  for(let i=3;i>=1;i--){
-    ctx.beginPath();ctx.arc(cx,cy,R+i*4,0,Math.PI*2);
-    ctx.strokeStyle=`rgba(0,229,255,${0.012*i})`;ctx.lineWidth=8;ctx.stroke();
+  for(let i=4;i>=1;i--){ctx.beginPath();ctx.arc(cx,cy,R+i*5,0,Math.PI*2);ctx.strokeStyle=`rgba(0,245,255,${0.008*i})`;ctx.lineWidth=10;ctx.stroke()}
+  ctx.beginPath();ctx.arc(cx,cy,R-14,0,Math.PI*2);ctx.strokeStyle='rgba(212,0,255,.08)';ctx.lineWidth=18;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.strokeStyle='rgba(0,245,255,.05)';ctx.lineWidth=3;ctx.stroke();
+  for(let i=0;i<90;i++){
+    const a=(i/90)*Math.PI*2-Math.PI/2;
+    const len=i%9===0?8:i%3===0?4:2,op=i%9===0?.25:i%3===0?.1:.04;
+    ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*(R+5),cy+Math.sin(a)*(R+5));ctx.lineTo(cx+Math.cos(a)*(R+5+len),cy+Math.sin(a)*(R+5+len));
+    ctx.strokeStyle=`rgba(0,245,255,${op})`;ctx.lineWidth=i%9===0?1.5:.5;ctx.stroke();
   }
-  // Magenta inner
-  ctx.beginPath();ctx.arc(cx,cy,R-10,0,Math.PI*2);
-  ctx.strokeStyle='rgba(153,0,204,.07)';ctx.lineWidth=14;ctx.stroke();
-  // Track
-  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.strokeStyle='rgba(0,229,255,.06)';ctx.lineWidth=3;ctx.stroke();
-  // Ticks
-  for(let i=0;i<72;i++){
-    const a=(i/72)*Math.PI*2-Math.PI/2;
-    const len=i%6===0?7:3,op=i%6===0?.2:.07;
-    ctx.beginPath();
-    ctx.moveTo(cx+Math.cos(a)*(R+5),cy+Math.sin(a)*(R+5));
-    ctx.lineTo(cx+Math.cos(a)*(R+5+len),cy+Math.sin(a)*(R+5+len));
-    ctx.strokeStyle=`rgba(0,229,255,${op})`;ctx.lineWidth=i%6===0?1:.5;ctx.stroke();
-  }
-  // Gradient arc
   const g=ctx.createLinearGradient(cx-R,cy-R,cx+R,cy+R);
-  g.addColorStop(0,'rgba(0,229,255,.9)');
-  g.addColorStop(.5,'rgba(153,0,204,.8)');
-  g.addColorStop(1,'rgba(0,229,255,.9)');
-  // Glow
-  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
-  ctx.strokeStyle='rgba(0,229,255,.12)';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();
-  // Main
-  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
-  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke();
-  // Inner mag
-  ctx.beginPath();ctx.arc(cx,cy,R-10,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));
-  ctx.strokeStyle='rgba(153,0,204,.25)';ctx.lineWidth=2;ctx.lineCap='round';ctx.stroke();
-  // Center glow
-  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,55);
-  cg.addColorStop(0,'rgba(0,229,255,.04)');cg.addColorStop(1,'transparent');
-  ctx.beginPath();ctx.arc(cx,cy,55,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
-  // Corner dots
-  [0,90,180,270].forEach(deg=>{
-    const a=deg*Math.PI/180;
-    ctx.beginPath();ctx.arc(cx+Math.cos(a)*(R+16),cy+Math.sin(a)*(R+16),2,0,Math.PI*2);
-    ctx.fillStyle='rgba(0,229,255,.35)';ctx.fill();
+  g.addColorStop(0,'rgba(0,245,255,.95)');g.addColorStop(.4,'rgba(0,200,212,.9)');g.addColorStop(.7,'rgba(150,0,220,.85)');g.addColorStop(1,'rgba(0,245,255,.95)');
+  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));ctx.strokeStyle='rgba(0,245,255,.1)';ctx.lineWidth=14;ctx.lineCap='round';ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));ctx.strokeStyle=g;ctx.lineWidth=3;ctx.lineCap='round';ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,R-14,-Math.PI/2,-Math.PI/2+Math.PI*2*(score/100));ctx.strokeStyle='rgba(212,0,255,.2)';ctx.lineWidth=1.5;ctx.lineCap='round';ctx.stroke();
+  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,70);cg.addColorStop(0,'rgba(0,245,255,.05)');cg.addColorStop(.5,'rgba(150,0,220,.03)');cg.addColorStop(1,'transparent');
+  ctx.beginPath();ctx.arc(cx,cy,70,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+  [0,72,144,216,288].forEach(deg=>{
+    const a=deg*Math.PI/180,dx=cx+Math.cos(a)*(R+18),dy=cy+Math.sin(a)*(R+18);
+    ctx.beginPath();ctx.arc(dx,dy,3,0,Math.PI*2);ctx.fillStyle='rgba(0,245,255,.4)';ctx.fill();
+    ctx.beginPath();ctx.arc(dx,dy,6,0,Math.PI*2);ctx.strokeStyle='rgba(0,245,255,.12)';ctx.lineWidth=.5;ctx.stroke();
   });
 }
 
-// ── WAVE ──
 function drawWave(){
   const cv=document.getElementById('wcanvas');
   const wrap=cv.parentElement;
   cv.width=wrap.offsetWidth||300;cv.height=wrap.offsetHeight||100;
   const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
   ctx.clearRect(0,0,W,H);
-  for(let i=0;i<=4;i++){
-    ctx.beginPath();ctx.moveTo(0,(i/4)*H);ctx.lineTo(W,(i/4)*H);
-    ctx.strokeStyle='rgba(0,229,255,.04)';ctx.lineWidth=.5;ctx.stroke();
-  }
-  [
-    {d:wdata.solar,c:'rgba(255,149,0,.85)',glow:'rgba(255,149,0,.07)',lw:1.8},
-    {d:wdata.wind, c:'rgba(0,229,255,.75)',glow:'rgba(0,229,255,.05)',lw:1.6},
-    {d:wdata.temp, c:'rgba(0,255,170,.65)',glow:'rgba(0,255,170,.04)',lw:1.4},
-    {d:wdata.risk, c:'rgba(153,0,204,.65)', glow:'rgba(153,0,204,.04)',lw:1.2},
-  ].forEach(w=>{
-    ctx.beginPath();ctx.moveTo(0,H);
-    w.d.forEach((v,i)=>ctx.lineTo((i/(w.d.length-1))*W,H-(v*(H-10))-5));
-    ctx.lineTo(W,H);ctx.closePath();ctx.fillStyle=w.glow;ctx.fill();
+  for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(0,(i/4)*H);ctx.lineTo(W,(i/4)*H);ctx.strokeStyle='rgba(0,245,255,.04)';ctx.lineWidth=.5;ctx.stroke()}
+  const waves=[
+    {d:wdata.solar,c:'rgba(255,157,0,.9)', lw:1.8},
+    {d:wdata.wind, c:'rgba(0,245,255,.8)', lw:1.6},
+    {d:wdata.temp, c:'rgba(0,255,179,.7)', lw:1.4},
+    {d:wdata.risk, c:'rgba(212,0,255,.7)', lw:1.2},
+  ];
+  waves.forEach(w=>{
     ctx.beginPath();
-    w.d.forEach((v,i)=>{
-      const x=(i/(w.d.length-1))*W,y=H-(v*(H-10))-5;
-      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    });
+    w.d.forEach((v,i)=>{const x=(i/(w.d.length-1))*W,y=H-(v*(H-10))-5;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+    ctx.strokeStyle=w.c.replace('.9','.15').replace('.8','.15').replace('.7','.12');ctx.lineWidth=w.lw*4;ctx.stroke();
+    ctx.beginPath();
+    w.d.forEach((v,i)=>{const x=(i/(w.d.length-1))*W,y=H-(v*(H-10))-5;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
     ctx.strokeStyle=w.c;ctx.lineWidth=w.lw;ctx.stroke();
   });
+  const lg=[['Solar','rgba(255,157,0,.9)'],['Wind','rgba(0,245,255,.8)'],['Temp','rgba(0,255,179,.7)'],['Risk','rgba(212,0,255,.7)']];
+  lg.forEach(([l,c],i)=>{ctx.fillStyle=c;ctx.fillRect(8+i*62,7,14,2);ctx.font='8px Orbitron,monospace';ctx.fillStyle='rgba(138,188,204,.9)';ctx.fillText(l,26+i*62,12)});
 }
 
-// ── DETAIL PANEL ──
-let currentOrgan=null;
-
-async function openDetail(organ, title, color){
-  // Mark active organ
-  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
-  document.getElementById('org-'+organ)?.classList.add('active');
-
-  currentOrgan=organ;
-  document.getElementById('detail-title').textContent=title;
-  document.getElementById('detail-title').style.color=color;
-  document.getElementById('detail-panel').classList.add('open');
-  document.getElementById('detail-tbody').innerHTML=
-    '<tr><td colspan="4" class="loading">Loading from database...</td></tr>';
-  document.getElementById('detail-stats').innerHTML='';
-
-  try{
-    const res=await fetch(`/api/history/${organ}`);
-    const json=await res.json();
-    const data=json.data||[];
-
-    if(data.length===0){
-      document.getElementById('detail-tbody').innerHTML=
-        '<tr><td colspan="4" class="loading">No data in last 24 hours</td></tr>';
-      return;
-    }
-
-    // Stats
-    const vals=data.map(r=>r.value).filter(v=>v>0);
-    const latest=vals[0]||0;
-    const avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
-    const max=vals.length?Math.max(...vals):0;
-    const min=vals.length?Math.min(...vals):0;
-    const unit=data[0]?.unit||'';
-
-    document.getElementById('detail-stats').innerHTML=`
-      <div class="dstat">
-        <div class="dstat-l">Latest</div>
-        <div class="dstat-v" style="color:${color}">${latest.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
-      </div>
-      <div class="dstat">
-        <div class="dstat-l">Average 24h</div>
-        <div class="dstat-v" style="color:var(--tx)">${avg.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
-      </div>
-      <div class="dstat">
-        <div class="dstat-l">Maximum</div>
-        <div class="dstat-v" style="color:var(--amber)">${max.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
-      </div>
-      <div class="dstat">
-        <div class="dstat-l">Minimum</div>
-        <div class="dstat-v" style="color:var(--cyan)">${min.toFixed(1)} <span style="font-size:9px;color:var(--t2)">${unit}</span></div>
-      </div>`;
-
-    // Mini chart
-    drawDetailChart(data.slice().reverse(), color);
-
-    // Table
-    const tbody=document.getElementById('detail-tbody');
-    tbody.innerHTML='';
-    data.slice(0,100).forEach(r=>{
-      const t=new Date(r.timestamp);
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td>${t.toTimeString().slice(0,8)}</td>
-        <td>${r.metric}</td>
-        <td>${r.value.toFixed(2)}</td>
-        <td>${r.unit}</td>`;
-      tbody.appendChild(tr);
-    });
-
-    addFeed(`Inspecting ${title}`,`${data.length} records loaded from TimescaleDB`,color,'INSPECT');
-
-  }catch(e){
-    document.getElementById('detail-tbody').innerHTML=
-      '<tr><td colspan="4" class="loading">Error loading data</td></tr>';
-    addFeed('Detail load failed',e.message,'var(--rd)','ERROR');
-  }
-}
-
-function drawDetailChart(data, color){
-  const cv=document.getElementById('detail-canvas');
-  cv.width=cv.parentElement.offsetWidth||280;
-  cv.height=80;
-  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
-  ctx.clearRect(0,0,W,H);
-  if(!data.length)return;
-  const vals=data.map(r=>r.value);
-  const mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
-  // Grid
-  for(let i=0;i<=3;i++){
-    ctx.beginPath();ctx.moveTo(0,(i/3)*H);ctx.lineTo(W,(i/3)*H);
-    ctx.strokeStyle='rgba(0,229,255,.04)';ctx.lineWidth=.5;ctx.stroke();
-  }
-  // Fill
-  const col=color.replace('var(--','').replace(')','');
-  const colors={cyan:'rgba(0,229,255,.06)',teal:'rgba(0,255,170,.05)',
-    amber:'rgba(255,149,0,.06)',mag:'rgba(153,0,204,.06)',grn:'rgba(0,255,136,.05)',
-    rd:'rgba(255,34,68,.06)'};
-  ctx.beginPath();ctx.moveTo(0,H);
-  vals.forEach((v,i)=>{
-    ctx.lineTo((i/(vals.length-1))*W, H-((v-mn)/rng)*(H-8)-4);
-  });
-  ctx.lineTo(W,H);ctx.closePath();
-  ctx.fillStyle=colors[col]||'rgba(0,229,255,.05)';ctx.fill();
-  // Line
-  ctx.beginPath();
-  vals.forEach((v,i)=>{
-    const x=(i/(vals.length-1))*W, y=H-((v-mn)/rng)*(H-8)-4;
-    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-  });
-  ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
-  // Labels
-  ctx.font='7px Orbitron,monospace';ctx.fillStyle='rgba(74,112,128,.7)';
-  ctx.fillText(mx.toFixed(1),2,10);
-  ctx.fillText(mn.toFixed(1),2,H-3);
-}
-
-function closeDetail(){
-  document.getElementById('detail-panel').classList.remove('open');
-  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
-  currentOrgan=null;
-}
-
-// ── RENDER ──
 function render(){
   const s=S.health,col=sc(s);
   document.getElementById('top-bar').style.width=s+'%';
   document.getElementById('top-val').textContent=s.toFixed(1)+'/100';
   document.getElementById('top-val').style.color=col;
   drawRing(s);
-  document.getElementById('rscore').textContent=s.toFixed(1);
-  document.getElementById('rscore').style.color=col;
-  document.getElementById('rscore').style.textShadow=`0 0 30px ${col}`;
+  document.getElementById('orb-score').textContent=s.toFixed(1);
+  document.getElementById('orb-score').style.color=col;
+  document.getElementById('orb-score').style.textShadow=`0 0 30px ${col},0 0 80px ${col}40`;
   const st=s>=80?'HEALTHY':s>=60?'MODERATE':s>=40?'WARNING':'CRITICAL';
-  document.getElementById('rstatus').textContent=st;
-  document.getElementById('rstatus').style.color=col;
-  const descs={
-    HEALTHY:'All six grid organs within normal parameters. California ISO operating nominally.',
-    MODERATE:'Minor deviations detected. Grid Twin monitoring. HQCOE on standby.',
-    WARNING:'Multiple organs showing stress. HQCOE computing response.',
-    CRITICAL:'Critical conditions. HQCOE response active. Human approval required.'
-  };
-  document.getElementById('hero-desc').textContent=descs[st];
-
-  // Tags
-  const tg=document.getElementById('hero-tags');tg.innerHTML='';
-  [
-    ['EIA LIVE','var(--teal)','rgba(0,255,170,.12)'],
-    ['OPEN-METEO','var(--cyan)','rgba(0,229,255,.1)'],
-    ['USGS','var(--amber)','rgba(255,149,0,.1)'],
-    ['NOAA','var(--mag)','rgba(153,0,204,.12)'],
-    [S.alerts+' ALERTS',S.alerts>0?'var(--rd)':'var(--teal)',
-      S.alerts>0?'rgba(255,34,68,.12)':'rgba(0,255,170,.1)'],
-  ].forEach(([l,c,bg])=>{
-    const el=document.createElement('div');el.className='htag';
-    el.style.cssText=`color:${c};border-color:${c};background:${bg}`;
-    el.textContent=l;tg.appendChild(el);
+  document.getElementById('orb-status').textContent=st;
+  document.getElementById('orb-status').style.color=col;
+  const descs={HEALTHY:'All six grid organs within normal parameters. California ISO operating nominally.',MODERATE:'Minor deviations detected. Grid Twin monitoring. HQCOE on standby.',WARNING:'Multiple organs showing stress. HQCOE computing optimal response.',CRITICAL:'Critical conditions. HQCOE response active. Human approval required.'};
+  document.getElementById('orb-desc').textContent=descs[st];
+  const tg=document.getElementById('orb-tags');tg.innerHTML='';
+  [['EIA LIVE','var(--teal)','rgba(0,255,179,.12)'],['OPEN-METEO','var(--cyan)','rgba(0,245,255,.1)'],['USGS','var(--amber)','rgba(255,157,0,.1)'],['NOAA','var(--mag)','rgba(212,0,255,.12)'],[S.alerts+' ALERTS',S.alerts>0?'var(--rd)':'var(--teal)',S.alerts>0?'rgba(255,26,58,.12)':'rgba(0,255,179,.1)']].forEach(([l,c,bg])=>{
+    const el=document.createElement('div');el.className='otag';el.style.cssText=`color:${c};border-color:${c};background:${bg}`;el.textContent=l;tg.appendChild(el);
   });
-
-  document.getElementById('m-solar').textContent=S.solar.toFixed(0)+' W/m²';
-  document.getElementById('m-wind').textContent=S.wind.toFixed(2)+' m/s';
+  document.getElementById('m-solar').textContent=S.solar.toFixed(0);
+  document.getElementById('m-wind').textContent=S.wind.toFixed(2);
   document.getElementById('m-temp').textContent=S.temp.toFixed(1)+'°C';
-  document.getElementById('m-risk').textContent=S.risk.toFixed(1)+'/100';
-
-  setOrg('elec', S.demand.toFixed(0)+' MWh',100,'var(--amber)');
+  document.getElementById('m-risk').textContent=S.risk.toFixed(1);
+  setOrg('electricity',S.demand.toFixed(0)+' MWh',100,'var(--amber)');
   setOrg('solar',S.solar.toFixed(0)+' W/m²',Math.min(S.solar/10,100),'var(--amber)');
-  setOrg('wind', S.wind.toFixed(2)+' m/s',100,'var(--cyan)');
-  setOrg('temp', S.temp.toFixed(1)+'°C',100,'var(--teal)');
-  setOrg('gas',  S.gasTotal.toLocaleString()+' Bcf',
-    Math.min((S.gasTotal/2500)*100,100),'var(--mag)');
+  setOrg('wind',S.wind.toFixed(2)+' m/s',100,'var(--cyan)');
+  setOrg('weather',S.temp.toFixed(1)+'°C',100,'var(--teal)');
+  setOrg('gas',S.gasTotal.toLocaleString()+' Bcf',Math.min((S.gasTotal/2500)*100,100),'var(--mag)');
   setOrg('water','Sacramento River',100,'var(--cyan)');
-  setOrg('forecast',S.risk.toFixed(1)+' risk',
-    Math.max(0,100-S.risk*10),'var(--mag)');
+  setOrg('forecast',S.risk.toFixed(1)+' risk',Math.max(0,100-S.risk*10),'var(--mag)');
   setOrg('health',S.health.toFixed(1)+'/100',S.health,'var(--grn)');
-
   renderGas();renderAlerts();
 }
 
@@ -705,36 +506,19 @@ function setOrg(id,val,pct,col){
   const os=document.getElementById('os-'+id);
   const ob=document.getElementById('ob-'+id);
   if(ov)ov.textContent=val;
-  if(os){
-    const c=sc(pct);
-    os.textContent=pct.toFixed(0)+'/100';os.style.color=c;
-    os.style.textShadow=`0 0 8px ${c}`;
-  }
-  if(ob){ob.style.width=pct+'%';ob.style.background=col;
-    ob.style.boxShadow=`0 0 5px ${col}`;}
+  if(os){const c=sc(pct);os.textContent=Math.round(pct)+'/100';os.style.color=c;os.style.textShadow=`0 0 8px ${c}`;}
+  if(ob){ob.style.width=pct+'%';ob.style.background=col;ob.style.boxShadow=`0 0 6px ${col}`;}
   const el=document.getElementById('org-'+id);
-  if(el)el.className='organ'+(el.classList.contains('active')?' active':'')+
-    (pct<60?' warn':pct<40?' crit':'');
+  if(el){const base='organ'+(el.classList.contains('active')?' active':'');el.className=base+(pct<60?' warn':pct<40?' crit':'');}
 }
 
 function renderGas(){
-  const regions=[
-    {n:'US Lower 48',v:S.gasTotal,mx:2500},
-    {n:'Midwest',v:581,mx:1000},{n:'Mountain',v:358,mx:500},
-    {n:'Pacific',v:277,mx:500},{n:'S.C. Nonsalt',v:261,mx:400},
-    {n:'S.C. Salt',v:208,mx:300},
-  ];
+  const regions=[{n:'US Lower 48',v:S.gasTotal,mx:2500},{n:'Midwest',v:581,mx:1000},{n:'Mountain',v:358,mx:500},{n:'Pacific',v:277,mx:500},{n:'S.C. Nonsalt',v:261,mx:400},{n:'S.C. Salt',v:208,mx:300}];
   const wrap=document.getElementById('gas-regions');wrap.innerHTML='';
   regions.forEach(r=>{
-    const p=Math.min((r.v/r.mx)*100,100);
-    const c=p>60?'var(--teal)':p>40?'var(--amber)':'var(--rd)';
+    const p=Math.min((r.v/r.mx)*100,100),c=p>60?'var(--teal)':p>40?'var(--amber)':'var(--rd)';
     const el=document.createElement('div');el.className='grow';
-    el.innerHTML=`
-      <div style="flex:1;min-width:0">
-        <div class="gname">${r.n}</div>
-        <div class="gbt"><div class="gbf" style="width:${p}%;background:${c};box-shadow:0 0 4px ${c}"></div></div>
-      </div>
-      <div class="gval" style="color:${c};margin-left:6px;text-shadow:0 0 6px ${c}">${r.v}</div>`;
+    el.innerHTML=`<div style="flex:1;min-width:0"><div class="gname">${r.n}</div><div class="gbt"><div class="gbf" style="width:${p}%;background:${c};box-shadow:0 0 4px ${c}"></div></div></div><div class="gval" style="color:${c};margin-left:8px;text-shadow:0 0 6px ${c}">${r.v}</div>`;
     wrap.appendChild(el);
   });
 }
@@ -743,34 +527,127 @@ function renderAlerts(){
   const wrap=document.getElementById('alerts-wrap');
   document.getElementById('acnt').textContent=S.alerts>0?S.alerts+' open':'';
   wrap.innerHTML='';
-  [
-    {type:'FREEZE WATCH',    desc:'Through April 17. Cold-weather grid protocol on standby.',sev:'Severe',cls:'crit',col:'var(--rd)'},
-    {type:'WIND ADVISORY',   desc:'Active across California and Nevada border regions.',sev:'Moderate',cls:'warn',col:'var(--amber)'},
-    {type:'SOLAR DROP RISK', desc:'Cloud cover reducing irradiance. Monitor solar output.',sev:'Minor',cls:'info',col:'var(--cyan)'},
-  ].forEach(a=>{
+  [{type:'FREEZE WATCH',desc:'Freeze watch in effect through April 17. Cold-weather grid protocol on standby.',sev:'Severe',cls:'crit',col:'var(--rd)'},
+   {type:'WIND ADVISORY',desc:'Wind advisories active across California and Nevada border regions.',sev:'Moderate',cls:'warn',col:'var(--amber)'},
+   {type:'SOLAR DROP RISK',desc:'Cloud cover reducing irradiance during overnight hours. Monitor output.',sev:'Minor',cls:'info',col:'var(--cyan)'}].forEach(a=>{
     const el=document.createElement('div');el.className='aitem '+a.cls;
-    el.innerHTML=`
-      <div class="atype" style="color:${a.col};text-shadow:0 0 8px ${a.col}">${a.type}</div>
-      <div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div>
-      <div class="adesc">${a.desc}</div>
-      <div class="atime">${ts()} UTC · OPEN</div>`;
+    el.innerHTML=`<div class="atype" style="color:${a.col};text-shadow:0 0 10px ${a.col}">${a.type}</div><div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div><div class="adesc">${a.desc}</div><div class="atime">${ts()} UTC · OPEN</div>`;
     wrap.appendChild(el);
   });
   const noaa=document.getElementById('noaa-wrap');noaa.innerHTML='';
-  [
-    {type:'Freeze Watch',sev:'Severe',desc:'Until April 17 08:00 PDT. NWS Reno NV.',col:'var(--rd)'},
-    {type:'Wind Advisory',sev:'Moderate',desc:'Until April 17 05:00 PDT. NWS Las Vegas NV.',col:'var(--amber)'},
-    {type:'Frost Advisory',sev:'Minor',desc:'Until April 16 09:00 PDT. NWS Medford OR.',col:'var(--cyan)'},
-    {type:'Lake Wind Advisory',sev:'Moderate',desc:'Until April 16 07:00 PDT. NWS Reno NV.',col:'var(--amber)'},
-  ].forEach(a=>{
+  [{type:'Freeze Watch',sev:'Severe',desc:'Until April 17 08:00 PDT. NWS Reno NV.',col:'var(--rd)'},
+   {type:'Wind Advisory',sev:'Moderate',desc:'Until April 17 05:00 PDT. NWS Las Vegas NV.',col:'var(--amber)'},
+   {type:'Frost Advisory',sev:'Minor',desc:'Until April 16 09:00 PDT. NWS Medford OR.',col:'var(--cyan)'},
+   {type:'Lake Wind Advisory',sev:'Moderate',desc:'Until April 16 07:00 PDT. NWS Reno NV.',col:'var(--amber)'}].forEach(a=>{
     const cls=a.sev==='Severe'?'crit':a.sev==='Moderate'?'warn':'info';
     const el=document.createElement('div');el.className='aitem '+cls;
-    el.innerHTML=`
-      <div class="atype" style="color:${a.col};text-shadow:0 0 8px ${a.col}">${a.type}</div>
-      <div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div>
-      <div class="adesc">${a.desc}</div>
-      <div class="atime">NOAA NWS · OPEN</div>`;
+    el.innerHTML=`<div class="atype" style="color:${a.col};text-shadow:0 0 10px ${a.col}">${a.type}</div><div class="asev" style="color:${a.col};border-color:${a.col}">${a.sev}</div><div class="adesc">${a.desc}</div><div class="atime">NOAA NWS · OPEN</div>`;
     noaa.appendChild(el);
+  });
+}
+
+async function openDetail(organ,title,color){
+  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
+  document.getElementById('org-'+organ)?.classList.add('active');
+  document.getElementById('detail-title').textContent=title;
+  document.getElementById('detail-title').style.color=color;
+  document.getElementById('detail-panel').classList.add('open');
+  document.getElementById('detail-tbody').innerHTML='<tr><td colspan="4" class="dloading">Loading from TimescaleDB...</td></tr>';
+  document.getElementById('detail-stats').innerHTML='';
+  try{
+    const res=await fetch(`/api/history/${organ}`);
+    const json=await res.json();
+    const data=json.data||[];
+    if(!data.length){document.getElementById('detail-tbody').innerHTML='<tr><td colspan="4" class="dloading">No data in last 24 hours</td></tr>';return;}
+    const vals=data.map(r=>r.value).filter(v=>v>0);
+    const latest=vals[0]||0,avg=vals.reduce((a,b)=>a+b,0)/vals.length,mx=Math.max(...vals),mn=Math.min(...vals);
+    const unit=data[0]?.unit||'';
+    document.getElementById('detail-stats').innerHTML=`
+      <div class="dstat"><div class="dstat-l">Latest</div><div class="dstat-v" style="color:${color}">${latest.toFixed(1)}<span class="dstat-u">${unit}</span></div></div>
+      <div class="dstat"><div class="dstat-l">Average 24h</div><div class="dstat-v" style="color:var(--tx)">${avg.toFixed(1)}<span class="dstat-u">${unit}</span></div></div>
+      <div class="dstat"><div class="dstat-l">Maximum</div><div class="dstat-v" style="color:var(--amber)">${mx.toFixed(1)}<span class="dstat-u">${unit}</span></div></div>
+      <div class="dstat"><div class="dstat-l">Minimum</div><div class="dstat-v" style="color:var(--cyan)">${mn.toFixed(1)}<span class="dstat-u">${unit}</span></div></div>`;
+    drawDetailChart(data.slice().reverse(),color);
+    const tbody=document.getElementById('detail-tbody');tbody.innerHTML='';
+    data.slice(0,100).forEach(r=>{
+      const t=new Date(r.timestamp);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${t.toTimeString().slice(0,8)}</td><td>${r.metric}</td><td>${r.value.toFixed(2)}</td><td>${r.unit}</td>`;
+      tbody.appendChild(tr);
+    });
+    addFeed(`Inspecting: ${title}`,`${data.length} records from TimescaleDB`,color,'INSPECT');
+  }catch(e){
+    document.getElementById('detail-tbody').innerHTML='<tr><td colspan="4" class="dloading">Error — start cargo run first</td></tr>';
+  }
+}
+
+function drawDetailChart(data,color){
+  const cv=document.getElementById('detail-canvas');
+  cv.width=cv.parentElement.offsetWidth||380;cv.height=100;
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  if(!data.length)return;
+  const vals=data.map(r=>r.value),mn=Math.min(...vals),mx=Math.max(...vals),rng=mx-mn||1;
+  for(let i=0;i<=3;i++){ctx.beginPath();ctx.moveTo(0,(i/3)*H);ctx.lineTo(W,(i/3)*H);ctx.strokeStyle='rgba(0,245,255,.08)';ctx.lineWidth=.5;ctx.stroke()}
+  ctx.beginPath();ctx.moveTo(0,H);
+  vals.forEach((v,i)=>ctx.lineTo((i/(vals.length-1))*W,H-((v-mn)/rng)*(H-12)-6));
+  ctx.lineTo(W,H);ctx.closePath();ctx.fillStyle='rgba(0,245,255,.1)';ctx.fill();
+  // Glow line
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=(i/(vals.length-1))*W,y=H-((v-mn)/rng)*(H-12)-6;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.strokeStyle='rgba(0,245,255,.2)';ctx.lineWidth=8;ctx.stroke();
+  // Main line
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=(i/(vals.length-1))*W,y=H-((v-mn)/rng)*(H-12)-6;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+  ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.stroke();
+  ctx.font='9px Orbitron,monospace';ctx.fillStyle='rgba(180,220,230,.9)';
+  ctx.fillText(mx.toFixed(1),3,11);ctx.fillText(mn.toFixed(1),3,H-3);
+}
+
+function closeDetail(){
+  document.getElementById('detail-panel').classList.remove('open');
+  document.querySelectorAll('.organ').forEach(o=>o.classList.remove('active'));
+}
+
+function openForecast(){
+  document.getElementById('forecast-panel').classList.add('open');
+  document.getElementById('fc-solar6').innerHTML=S.solar.toFixed(0)+'<span class="fc-stat-u">W/m²</span>';
+  document.getElementById('fc-wind6').innerHTML=S.wind.toFixed(2)+'<span class="fc-stat-u">m/s</span>';
+  document.getElementById('fc-temp6').innerHTML=S.temp.toFixed(1)+'<span class="fc-stat-u">°C</span>';
+  document.getElementById('fc-risk7').innerHTML=S.risk.toFixed(1)+'<span class="fc-stat-u">/100</span>';
+  document.getElementById('fc-s24').textContent=(S.solar*0.65).toFixed(0)+' W/m²';
+  document.getElementById('fc-w24').textContent=(S.wind*1.15).toFixed(2)+' m/s';
+  document.getElementById('fc-t24').textContent=(S.temp-1.5).toFixed(1)+'°C';
+  document.getElementById('fc-freeze').textContent='0.0%';
+  setTimeout(drawForecastFull,80);
+  addFeed('Forecast expanded','72-hour ML predictions — Solar · Wind · Temp · Risk','var(--cyan)','FORECAST');
+}
+
+function closeForecast(){
+  document.getElementById('forecast-panel').classList.remove('open');
+}
+
+function drawForecastFull(){
+  const cv=document.getElementById('forecast-canvas');
+  const wrap=cv.parentElement;
+  cv.width=wrap.offsetWidth||900;
+  cv.height=Math.max(wrap.offsetHeight-10,200);
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  for(let i=0;i<=7;i++){
+    const x=(i/7)*W;
+    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.strokeStyle='rgba(0,245,255,.07)';ctx.lineWidth=.5;ctx.stroke();
+    if(i<7){ctx.font='bold 9px Orbitron,monospace';ctx.fillStyle='rgba(144,200,216,.8)';ctx.fillText('Day '+(i+1),x+6,H-6);}
+  }
+  for(let i=0;i<=5;i++){ctx.beginPath();ctx.moveTo(0,(i/5)*H);ctx.lineTo(W,(i/5)*H);ctx.strokeStyle='rgba(0,245,255,.04)';ctx.lineWidth=.5;ctx.stroke()}
+  [{d:wdata.solar,c:'rgba(255,157,0,.95)',lw:2.5},{d:wdata.wind,c:'rgba(0,245,255,.9)',lw:2.2},{d:wdata.temp,c:'rgba(0,255,179,.85)',lw:2.0},{d:wdata.risk,c:'rgba(212,0,255,.8)',lw:1.8}].forEach(w=>{
+    ctx.beginPath();ctx.moveTo(0,H);
+    w.d.forEach((v,i)=>ctx.lineTo((i/(w.d.length-1))*W,H-(v*(H-40))-20));
+    ctx.lineTo(W,H);ctx.closePath();ctx.fillStyle=w.c.replace('.95','.08').replace('.9','.07').replace('.85','.06').replace('.8','.05');ctx.fill();
+    ctx.beginPath();w.d.forEach((v,i)=>{const x=(i/(w.d.length-1))*W,y=H-(v*(H-40))-20;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+    ctx.strokeStyle=w.c.replace('.95','.2').replace('.9','.18').replace('.85','.16').replace('.8','.15');ctx.lineWidth=w.lw*5;ctx.stroke();
+    ctx.beginPath();w.d.forEach((v,i)=>{const x=(i/(w.d.length-1))*W,y=H-(v*(H-40))-20;i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)});
+    ctx.strokeStyle=w.c;ctx.lineWidth=w.lw;ctx.stroke();
   });
 }
 
@@ -778,51 +655,24 @@ function addFeed(text,sub,color,badge){
   feedCount++;
   const feed=document.getElementById('feed');
   const el=document.createElement('div');el.className='fitem';
-  el.innerHTML=`
-    <div class="fdot" style="background:${color};box-shadow:0 0 4px ${color}"></div>
-    <div class="ftime">${ts()}</div>
-    <div><div class="ftxt">${text}</div>${sub?`<div class="fsub">${sub}</div>`:''}</div>
-    ${badge?`<div class="fbadge" style="color:${color};border-color:${color}">${badge}</div>`:''}`;
+  el.innerHTML=`<div class="fdot" style="background:${color};box-shadow:0 0 5px ${color}"></div><div class="ftime">${ts()}</div><div><div class="ftxt">${text}</div>${sub?`<div class="fsub">${sub}</div>`:''}</div>${badge?`<div class="fbadge" style="color:${color};border-color:${color}">${badge}</div>`:''}`;
   feed.insertBefore(el,feed.firstChild);
   while(feed.children.length>80)feed.removeChild(feed.lastChild);
   document.getElementById('feed-cnt').textContent=feedCount+' events';
 }
 
 function animWave(){
-  Object.keys(wdata).forEach(k=>{
-    wdata[k].push(wdata[k].shift());
-    const l=wdata[k].length-1;
-    wdata[k][l]=Math.max(.05,Math.min(.95,wdata[k][l]+(Math.random()-.5)*.05));
-  });
+  Object.keys(wdata).forEach(k=>{wdata[k].push(wdata[k].shift());const l=wdata[k].length-1;wdata[k][l]=Math.max(.05,Math.min(.95,wdata[k][l]+(Math.random()-.5)*.05))});
   drawWave();
 }
 
-// ── WEBSOCKET ──
 function connectWS(){
   try{
     ws=new WebSocket('ws://127.0.0.1:3001/ws');
-    ws.onopen=()=>{
-      document.getElementById('conn').textContent='LIVE';
-      document.getElementById('conn').className='conn ok';
-      addFeed('WebSocket connected','Real-time PENS backend streaming','var(--teal)','WS');
-    };
-    ws.onmessage=(e)=>{
-      try{
-        const d=JSON.parse(e.data);
-        Object.keys(d).forEach(k=>{if(S[k]!==undefined)S[k]=d[k];});
-        if(d.event)addFeed(d.event.text,d.event.sub,d.event.color||'var(--cyan)',d.event.badge||'');
-        render();
-      }catch(e){}
-    };
-    ws.onclose=()=>{
-      document.getElementById('conn').textContent='RECONNECTING';
-      document.getElementById('conn').className='conn err';
-      setTimeout(connectWS,3000);
-    };
-    ws.onerror=()=>{
-      document.getElementById('conn').textContent='OFFLINE';
-      document.getElementById('conn').className='conn err';
-    };
+    ws.onopen=()=>{document.getElementById('conn').textContent='LIVE';document.getElementById('conn').className='conn ok';addFeed('WebSocket connected to PENS backend','Real-time data streaming active','var(--teal)','WS')};
+    ws.onmessage=(e)=>{try{const d=JSON.parse(e.data);Object.keys(d).forEach(k=>{if(S[k]!==undefined)S[k]=d[k]});if(d.event)addFeed(d.event.text,d.event.sub,d.event.color||'var(--cyan)',d.event.badge||'');render()}catch(e){}};
+    ws.onclose=()=>{document.getElementById('conn').textContent='RECONNECTING';document.getElementById('conn').className='conn err';setTimeout(connectWS,3000)};
+    ws.onerror=()=>{document.getElementById('conn').textContent='OFFLINE';document.getElementById('conn').className='conn err'};
   }catch(e){}
 }
 
@@ -834,11 +684,13 @@ function simTick(){
   S.temp+=(Math.random()-.5)*.08;
   S.demand=Math.max(15000,S.demand+(Math.random()-.5)*100);
   const evs=[
-    {t:`Grid Twin cycle #${cycle}`,s:`Solar:${S.solar.toFixed(0)}W/m² Wind:${S.wind.toFixed(2)}m/s Temp:${S.temp.toFixed(1)}°C`,c:'var(--t2)',b:'SENSOR'},
+    {t:`Grid Twin cycle #${cycle}`,s:`Solar:${S.solar.toFixed(0)}W/m² Wind:${S.wind.toFixed(2)}m/s Temp:${S.temp.toFixed(1)}°C`,c:'var(--cyan2)',b:'SENSOR'},
     {t:`EIA demand: ${S.demand.toFixed(0)} MWh`,s:'California ISO · CAISO',c:'var(--amber)',b:'EIA'},
-    {t:`Health: ${S.health.toFixed(1)}/100`,s:'All organs nominal',c:'var(--teal)',b:'OK'},
+    {t:`Health: ${S.health.toFixed(1)}/100 — HEALTHY`,s:'All organs nominal',c:'var(--teal)',b:'OK'},
     {t:'USGS water data received',s:'Sacramento River station 11447650',c:'var(--cyan)',b:'USGS'},
     {t:'Anomaly check — no issues',s:'All thresholds within normal range',c:'var(--teal)',b:'ANOMALY'},
+    {t:'HQCOE quantum decision',s:'Dispatch solar generation + Charge storage from surplus',c:'var(--mag)',b:'QAOA'},
+    {t:'AMIL battery candidate',s:'LiCoS2 — VQE: 100/100 — patent_pending',c:'var(--amber)',b:'AMIL'},
   ];
   const ev=evs[cycle%evs.length];
   addFeed(ev.t,ev.s,ev.c,ev.b);render();
@@ -846,19 +698,19 @@ function simTick(){
 
 setTimeout(()=>{
   render();drawWave();
-  addFeed('PENS initialised','Grid Twin · HQCOE · AMIL · TimescaleDB online','var(--teal)','BOOT');
-  addFeed('EIA API connected','California ISO hourly demand streaming','var(--amber)','EIA');
-  addFeed('Open-Meteo connected','Solar and wind speed live','var(--cyan)','WEATHER');
-  addFeed('USGS connected','Sacramento River monitoring active','var(--cyan)','WATER');
-  addFeed('NOAA connected','10 active weather alerts loaded','var(--rd)','ALERT');
-  addFeed('Gas loaded','US Lower 48: 1,911 Bcf — all regions normal','var(--amber)','GAS');
-  addFeed('Health: 89.5/100','HEALTHY — risk: 2.2/100','var(--teal)','HEALTH');
+  addFeed('PENS Grid OS initialised','Grid Twin · HQCOE · AMIL · TimescaleDB · Redis online','var(--teal)','BOOT');
+  addFeed('EIA API connected','California ISO hourly demand streaming · CAISO','var(--amber)','EIA');
+  addFeed('Open-Meteo connected','Solar 960 W/m² · Wind 2.41 m/s · Temp 19.5°C','var(--cyan)','WEATHER');
+  addFeed('USGS connected','Sacramento River temperature monitoring active','var(--cyan)','WATER');
+  addFeed('NOAA connected','10 active weather alerts loaded for California','var(--rd)','ALERT');
+  addFeed('Gas storage loaded','US Lower 48: 1,911 Bcf · All 6 regions normal','var(--amber)','GAS');
+  addFeed('IBM QPU validated','ibm_kingston 156-qubit · Similarity: 91.1%','var(--mag)','QPU');
+  addFeed('Grid health: 89.5/100','HEALTHY · Forecast risk: 2.3/100','var(--teal)','HEALTH');
 },100);
 
 setInterval(simTick,4000);
 setInterval(animWave,80);
-setInterval(()=>{document.getElementById('clk').textContent=
-  new Date().toUTCString().slice(17,25)+' UTC';},1000);
+setInterval(()=>{document.getElementById('clk').textContent=new Date().toUTCString().slice(17,25)+' UTC';},1000);
 connectWS();
 </script>
 </body>

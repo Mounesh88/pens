@@ -30,6 +30,34 @@ pub async fn setup_tables(client: &Client) -> Result<(), Error> {
         &[],
     ).await?;
 
+    // Operators table
+    client.execute(
+        "CREATE TABLE IF NOT EXISTS operators (
+            id            BIGSERIAL PRIMARY KEY,
+            timestamp     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            username      TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            role          TEXT NOT NULL DEFAULT 'operator',
+            last_login    TIMESTAMPTZ,
+            active        BOOLEAN DEFAULT TRUE
+        )",
+        &[],
+    ).await?;
+
+    // Sessions table
+    client.execute(
+        "CREATE TABLE IF NOT EXISTS sessions (
+            id            BIGSERIAL PRIMARY KEY,
+            timestamp     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            username      TEXT NOT NULL,
+            token         TEXT NOT NULL UNIQUE,
+            expires_at    TIMESTAMPTZ NOT NULL,
+            role          TEXT NOT NULL,
+            active        BOOLEAN DEFAULT TRUE
+        )",
+        &[],
+    ).await?;
+
     // Alerts table
     client.execute(
         "CREATE TABLE IF NOT EXISTS grid_alerts (

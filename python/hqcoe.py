@@ -12,7 +12,9 @@ from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
 from scipy.optimize import minimize
 
-load_dotenv(dotenv_path='../.env')
+import pathlib
+BASE = pathlib.Path(__file__).parent.parent
+load_dotenv(dotenv_path=BASE / '.env')
 
 # ── DATABASE ──
 def get_db():

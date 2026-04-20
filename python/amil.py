@@ -9,7 +9,9 @@ import pennylane as qml
 from datetime import datetime, timezone
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path='../.env')
+import pathlib
+BASE = pathlib.Path(__file__).parent.parent
+load_dotenv(dotenv_path=BASE / '.env')
 
 # ── DATABASE ──
 def get_db():
